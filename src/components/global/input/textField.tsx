@@ -19,6 +19,7 @@ const TextField = (props: Props) => {
           name={props.name}
           className={`py-1 px-2 rounded-md ${props.className}`}
           placeholder={props.placeholder}
+          
         />
         <ErrorMessage
           name={props.name ?? ""}
