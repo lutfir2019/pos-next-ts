@@ -20,29 +20,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-# Technology Stack Description
-
-This application is built using the following technologies:
-
-## Next.js
-Next.js is a React framework that allows you to easily build React web applications. Next.js provides features such as pre-rendering, routing, and code splitting that accelerate web application development. With Next.js, you can create powerful and efficient React web applications.
-
-Next.js Documentation: [Next.js Documentation](https://nextjs.org/docs)
-
-## TanStack Query
-TanStack Query is a library for managing state and providing tools for data fetching in React applications. TanStack Query simplifies the logic of fetching and managing data in applications, including caching, invalidation, and automatic refetching.
-
-TanStack Query Documentation: [TanStack Query Documentation](https://react-query.tanstack.com/)
-
-## Formik
-Formik is a library for managing forms in React applications. Formik provides tools for handling form validation, input value handling, and form data submission with ease. With Formik, you can build and manage forms more efficiently.
-
-Formik Documentation: [Formik Documentation](https://formik.org/docs/overview)
-
-## Yup
-Yup is a schema validation library for JavaScript. Yup allows you to define validation schemas for data and confirm whether the data meets the desired criteria. Yup is often used alongside Formik for form validation in React applications.
-
-Yup Documentation: [Yup Documentation](https://github.com/jquense/yup)
+## Technology Stack
+ 
+ - Next.js Documentation: [Next.js Documentation](https://nextjs.org/docs)
+ - TanStack Query Documentation: [TanStack Query Documentation](https://react-query.tanstack.com/)
+ - Formik Documentation: [Formik Documentation](https://formik.org/docs/overview)
+ - Yup Documentation: [Yup Documentation](https://github.com/jquense/yup)
 
 ## Learn More
 
