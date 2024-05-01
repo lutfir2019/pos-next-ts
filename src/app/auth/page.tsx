@@ -6,7 +6,8 @@ import { Auth } from "@/types/auth";
 import * as yup from "yup";
 import TextField from "@/components/global/input/textField";
 import ButtonBase from "@/components/global/button/base";
-import { Login } from "@/hook/auth";
+import { useLogin } from "@/hook/auth";
+import Link from "next/link";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email().required().label("Email"),
@@ -18,18 +19,18 @@ const initialValues: Auth = {
 };
 
 export default function Page() {
-  const { mutate: login, ...mutation } = Login();
+  const loginStore = useLogin();
 
   return (
     <div className="flex flex-col p-5 gap-3">
       <h1>My Form</h1>
       <p className="flex justify-center text-red-500">
-        {mutation.error?.response?.data?.message ?? ""}
+        {loginStore.error?.response?.data?.message ?? ""}
       </p>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => login(values)}
+        onSubmit={(values) => loginStore.mutateAsync(values)}
       >
         {() => (
           <Form className="flex flex-col gap-3">
@@ -46,16 +47,16 @@ export default function Page() {
               className="text-black"
             />
             <ButtonBase
-              text={mutation.isPending ? "Loading..." : "Submit"}
               type="submit"
-              disabled={mutation.isPending}
-              className={`bg-slate-500 hover:bg-slate-600 ${
-                mutation.isPending && "bg-slate-600"
-              }`}
-            />
+              disabled={loginStore.isPending}
+              className={`${loginStore.isPending && "bg-blue-700"}`}
+            >
+              {loginStore.isPending ? "Loading..." : "Submit"}
+            </ButtonBase>
           </Form>
         )}
       </Formik>
+      <Link href='/pages/product'>Product</Link>
     </div>
   );
 }

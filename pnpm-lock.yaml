@@ -40,6 +40,9 @@ devDependencies:
   postcss:
     specifier: ^8
     version: 8.4.38
+  react-icons:
+    specifier: ^5.2.0
+    version: 5.2.0(react@18.3.1)
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.3
@@ -916,6 +919,14 @@ packages:
 
   /react-fast-compare@2.0.4:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
+    dev: true
+
+  /react-icons@5.2.0(react@18.3.1):
+    resolution: {integrity: sha512-n52Y7Eb4MgQZHsSZOhSXv1zs2668/hBYKfSRIvKh42yExjyhZu0d1IK2CLLZ3BZB1oo13lDfwx2vOh2z9FTV6Q==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.3.1
     dev: true
 
   /react-is@16.13.1:

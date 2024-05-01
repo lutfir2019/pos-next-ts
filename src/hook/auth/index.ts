@@ -2,14 +2,15 @@ import { useMutation } from "@tanstack/react-query";
 import { postLogin } from "./request";
 import { AxiosError } from "axios";
 
-export const Login = () => {
-  return useMutation({
+interface LoginProps {
+  onSuccess?: () => void;
+  onError?: () => void;
+}
+export const useLogin = (props?: LoginProps) =>
+  useMutation({
     mutationFn: postLogin,
     onError(error: AxiosError<Error>, variables, context) {
       console.error(error);
     },
-    onSuccess(data, variables, context) {
-      console.log(data);
-    },
+    ...props,
   });
-};
