@@ -10,6 +10,11 @@ interface Children {
 }
 
 export default function Provider({ children }: Readonly<Children>) {
+  client.setDefaultOptions({
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  });
   return (
     <QueryClientProvider client={client}>
       <ReactQueryDevtools initialIsOpen={false} />
