@@ -1,5 +1,5 @@
 import { ParamsReq, ProductResponse } from "@/types/product";
-import { axiosInstance } from "@/utils/axios";
+import axiosInstance  from "@/utils/axios";
 import { AxiosResponse } from "axios";
 
 export const fetchProducts = async (

@@ -3,11 +3,13 @@
 import ButtonBase from "@/components/global/button/base";
 import Modal from "@/components/global/modal/modal";
 import { useProduct } from "@/hook/product";
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
+import { useNotif } from "@/hook";
 
 const Page = () => {
   const productStore = useProduct();
+  const { setData } = useNotif();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -49,6 +51,9 @@ const Page = () => {
         </tbody>
       </table>
       {productStore.isLoading && "Loading..."}
+      <ButtonBase theme="primary" onClick={() => setData({ show: true })}>
+        test
+      </ButtonBase>
       <ButtonBase theme="secondary" onClick={() => setIsOpen(!isOpen)}>
         Modal
       </ButtonBase>

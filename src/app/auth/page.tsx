@@ -6,7 +6,7 @@ import { Auth } from "@/types/auth";
 import * as yup from "yup";
 import TextField from "@/components/global/input/textField";
 import ButtonBase from "@/components/global/button/base";
-import { useLogin } from "@/hook/auth";
+import { useLogin } from "@/hook";
 import Link from "next/link";
 
 const validationSchema = yup.object().shape({

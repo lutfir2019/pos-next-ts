@@ -1,4 +1,3 @@
-import LoadingPage from "@/components/global/modal/loadingPage";
 import Sidebar from "@/components/global/sidebar/sidebar";
 
 interface Children {
@@ -8,7 +7,6 @@ const Layout = ({ children }: Readonly<Children>) => {
   return (
     <Sidebar>
       {children}
-      <LoadingPage />
     </Sidebar>
   );
 };
