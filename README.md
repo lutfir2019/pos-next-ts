@@ -21,11 +21,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Technology Stack
- 
- - Next.js Documentation: [Next.js Documentation](https://nextjs.org/docs)
- - TanStack Query Documentation: [TanStack Query Documentation](https://react-query.tanstack.com/)
- - Formik Documentation: [Formik Documentation](https://formik.org/docs/overview)
- - Yup Documentation: [Yup Documentation](https://github.com/jquense/yup)
+
+- Next.js Documentation: [Next.js Documentation](https://nextjs.org/docs)
+- Zustand Documentation: [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- Formik Documentation: [Formik Documentation](https://formik.org/docs/overview)
+- Yup Documentation: [Yup Documentation](https://github.com/jquense/yup)
 
 ## Learn More
 
