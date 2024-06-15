@@ -6,57 +6,60 @@ import { Auth } from "@/types/auth";
 import * as yup from "yup";
 import TextField from "@/components/global/input/textField";
 import ButtonBase from "@/components/global/button/base";
-import { useLogin } from "@/hook";
 import Link from "next/link";
+import { useAuth } from "@/stores/auth/useAuth";
 
 const validationSchema = yup.object().shape({
-  email: yup.string().email().required().label("Email"),
-  password: yup.string().required().label("Password"),
+  unm: yup.string().email().required().label("Email"),
+  pass: yup.string().required().label("Password"),
 });
 const initialValues: Auth = {
-  email: "",
-  password: "",
+  unm: "",
+  pass: "",
 };
 
 export default function Page() {
-  const loginStore = useLogin();
+  const authStore = useAuth();
 
   return (
     <div className="flex flex-col p-5 gap-3">
       <h1>My Form</h1>
       <p className="flex justify-center text-red-500">
-        {loginStore.error?.response?.data?.message ?? ""}
+        {authStore.error?.response?.data?.message ?? ""}
+      </p>
+      <p>
+        {authStore.data.unm}
       </p>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => loginStore.mutateAsync(values)}
+        onSubmit={(values) => authStore.login(values)}
       >
         {() => (
           <Form className="flex flex-col gap-3">
             <TextField
-              name="email"
+              name="unm"
               type="email"
               label="Email"
               className="text-black"
             />
             <TextField
-              name="password"
+              name="pass"
               type="password"
               label="Password"
               className="text-black"
             />
             <ButtonBase
               type="submit"
-              disabled={loginStore.isPending}
-              className={`${loginStore.isPending && "bg-blue-700"}`}
+              disabled={authStore.is_loading}
+              className={`${authStore.is_loading && "bg-blue-700"}`}
             >
-              {loginStore.isPending ? "Loading..." : "Submit"}
+              {authStore.is_loading ? "Loading..." : "Submit"}
             </ButtonBase>
           </Form>
         )}
       </Formik>
-      <Link href='/pages/product'>Product</Link>
+      <Link href="/pages/product">Product</Link>
     </div>
   );
 }

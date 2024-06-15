@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Provider from "@/utils/Providers";
 import LoadingPage from "@/components/global/modal/loadingPage";
 import NotificationPage from "@/components/global/modal/notif";
 
@@ -20,11 +19,9 @@ export default function RootLayout({ children }: Readonly<Root>) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Provider>
-          {children}
-          <LoadingPage />
-          <NotificationPage />
-        </Provider>
+        {children}
+        <LoadingPage />
+        <NotificationPage />
       </body>
     </html>
   );

@@ -1,18 +1,25 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import client from "./client";
+import { useLoading } from "@/stores/useLoading";
+import { useLayout } from "@/stores/useLayout";
 
 const createAxiosInstance = () => {
   const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
+
+  const loadingStore = useLoading.getState();
+  const layoutStore = useLayout.getState();
 
   axiosInstance.interceptors.request.use(
     (config) => {
-      client.setQueryData(["loading"], true);
+      loadingStore.setLoading({ is_loading: true });
       return config;
     },
     (error: AxiosError) => {
-      client.setQueryData(["loading"], true);
+      loadingStore.setLoading({ is_loading: true });
       console.error("Request error:", error);
       return Promise.reject(error);
     }
@@ -20,14 +27,14 @@ const createAxiosInstance = () => {
 
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
-      client.setQueryData(["loading"], false);
+      loadingStore.setLoading({ is_loading: false });
       return response;
     },
     (error: AxiosError) => {
-      client.setQueryData(["loading"], false);
+      loadingStore.setLoading({ is_loading: false });
       console.error("Response error:", error);
       if (error.code == "NETWORK_ERROR") {
-        client.setQueryData(["notification"], {
+        layoutStore.setLayout({
           show: true,
           title: "Error",
           message: "Network Error",

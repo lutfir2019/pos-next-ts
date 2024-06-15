@@ -2,15 +2,19 @@
 
 import ButtonBase from "@/components/global/button/base";
 import Modal from "@/components/global/modal/modal";
-import { useProduct } from "@/hook/product";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useNotif } from "@/hook";
+import { useProduct } from "@/stores/product/useProduct";
+import { useLayout } from "@/stores/useLayout";
 
 const Page = () => {
   const productStore = useProduct();
-  const { setData } = useNotif();
   const [isOpen, setIsOpen] = useState(false);
+  const layoutStore = useLayout();
+
+  useEffect(() => {
+    productStore.getProduct();
+  }, []);
 
   return (
     <div className="flex flex-col relative overflow-x-auto gap-2">
@@ -32,7 +36,7 @@ const Page = () => {
           </tr>
         </thead>
         <tbody>
-          {productStore.data?.data?.products?.map((data) => (
+          {productStore.data?.map((data) => (
             <tr
               key={data.id}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -50,8 +54,11 @@ const Page = () => {
           ))}
         </tbody>
       </table>
-      {productStore.isLoading && "Loading..."}
-      <ButtonBase theme="primary" onClick={() => setData({ show: true })}>
+      {productStore.is_loading && "Loading..."}
+      <ButtonBase
+        theme="primary"
+        onClick={() => layoutStore.setLayout({ show: true })}
+      >
         test
       </ButtonBase>
       <ButtonBase theme="secondary" onClick={() => setIsOpen(!isOpen)}>
