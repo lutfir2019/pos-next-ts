@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, useField } from "formik";
+import { Formik, Form } from "formik";
 import * as yup from "yup";
 import Modal from "@/components/global/modal/modal";
 import Input from "@/components/global/input/inputCustom"; // Pastikan impor komponen ini benar
@@ -11,9 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import FileUpload from "../../global/input/file";
+import FileUpload from "@/components/global/input/file";
 
-interface Props {}
+interface Props {
+  open: boolean;
+}
 
 const validationSchema = yup.object({
   // name: yup.string().required("Name is required").label("Name"),
@@ -41,17 +43,21 @@ const initialValues = {
   file: null,
 };
 
-const AddEdit: React.FC<Props> = () => {
-  const [open, setOpen] = useState<boolean>(false);
+const AddEdit: React.FC<Props> = ({ open }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const submit = (values: typeof initialValues) => {
     console.log(values);
   };
 
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
+
   return (
     <Modal
-      open={true}
-      onClose={() => setOpen(false)}
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
       className="bg-transparent min-w-full"
     >
       <Formik
