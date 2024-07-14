@@ -1,4 +1,5 @@
 import Pagination from "@/components/global/pagination/CustomPagination";
+import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { useProduct } from "@/stores/product/useProduct";
 import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
@@ -44,11 +45,11 @@ const Footer: React.FC<{
                 })
               }
             >
-              <ChevronLeftCircle className="w-5 h-5" />
+              <ChevronLeftCircle className="w-6 h-6" />
             </button>
-            <div className="flex justify-center items-center min-w-7 min-h-7 px-1 py-0.5 rounded-full border-2 border-primary">
+            <Button size="sm" variant="outline" className="cursor-text hover:bg-transparent hover:text-primary">
               <span>{productStore.data.skip}</span>
-            </div>
+            </Button>
             <button
               type="button"
               disabled={productStore.data.skip == productStore.data.total}
@@ -61,7 +62,7 @@ const Footer: React.FC<{
                 })
               }
             >
-              <ChevronRightCircle className="w-5 h-5" />
+              <ChevronRightCircle className="w-6 h-6" />
             </button>
           </div>
         )}
