@@ -27,10 +27,15 @@ const CustomPagination: React.FC<{
   const pageLinks = Array.from(
     { length: endIndex - startIndex + 1 },
     (_, i) => (
-      <PaginationItem key={startIndex + i}>
+      <PaginationItem
+        key={startIndex + i}
+        className={startIndex + i !== page ? "cursor-pointer" : ""}
+      >
         <PaginationLink
           isActive={startIndex + i === page}
-          onClick={() => onPageChange(startIndex + i)}
+          onClick={() => {
+            if (startIndex + i !== page) onPageChange(startIndex + i);
+          }}
         >
           {startIndex + i}
         </PaginationLink>
