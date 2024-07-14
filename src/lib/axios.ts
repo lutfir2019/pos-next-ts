@@ -7,19 +7,17 @@ const createAxiosInstance = () => {
     baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
   });
 
-  const loadingStore = useLoading.getState();
-  const layoutStore = useLayout.getState();
-
   axiosInstance.interceptors.request.use(
     (config) => {
-      loadingStore.setLoading({ is_loading: true });
+      useLoading.getState().setLoading({ is_loading: true });
       return config;
     },
     (error: AxiosError) => {
-      loadingStore.setLoading({ is_loading: true });
+      useLoading.getState().setLoading({ is_loading: true });
       console.error("Request error:", error);
       return Promise.reject(error);
     }
@@ -27,14 +25,14 @@ const createAxiosInstance = () => {
 
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
-      loadingStore.setLoading({ is_loading: false });
+      useLoading.getState().setLoading({ is_loading: false });
       return response;
     },
     (error: AxiosError) => {
-      loadingStore.setLoading({ is_loading: false });
+      useLoading.getState().setLoading({ is_loading: false });
       console.error("Response error:", error);
       if (error.code == "NETWORK_ERROR") {
-        layoutStore.setLayout({
+        useLayout.getState().setLayout({
           show: true,
           title: "Error",
           message: "Network Error",

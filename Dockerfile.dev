@@ -1,0 +1,18 @@
+FROM node:lts-alpine
+
+RUN npm install -g pnpm
+
+WORKDIR /app
+
+COPY package* .
+COPY pnpm-lock.yaml .
+
+RUN pnpm i
+
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "pnpm", "dev" ]
+
+# docker build -f Dockerfile.dev -t nextjs/pos .

@@ -1,14 +1,14 @@
-import { IconType } from "react-icons/lib";
+import { IconsType } from "./globalType";
 
 export interface SideBar {
   title: string;
   path: any;
-  icon: IconType;
+  icon: IconsType;
   subMenu: SubMenu[];
 }
 
 export interface SubMenu {
   title: string;
   path: any;
-  icon: IconType;
+  icon: IconsType;
 }

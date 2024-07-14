@@ -2,102 +2,49 @@
 
 import Link from "next/link";
 import { sideBar } from "./list-menu";
-import React, { useState } from "react";
-import { IconType } from "react-icons/lib";
-import { usePathname } from "next/navigation";
-import { FaBarsStaggered } from "react-icons/fa6";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { Package2 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import Icons from "@/components/global/icons/Icons";
+import { ThemeButton } from "@/components/global/button/ThemeButton";
 
-interface Children {
-  children: React.ReactNode;
-}
-
-const Sidebar = ({ children }: Children) => {
-  const [openSidebar, setOpenSidebar] = useState(false),
-    [openSubmenu, setOpenSubmenu] = useState(false),
-    pathname = usePathname();
-
+const Sidebar = () => {
   return (
-    <div>
-      <button
-        type="button"
-        onClick={() => setOpenSidebar(!openSidebar)}
-        className="flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      >
-        <FaBarsStaggered size={25} />
-      </button>
-
-      <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
-          openSidebar ? "" : "-translate-x-full"
-        } sm:translate-x-0`}
-      >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <ul className="space-y-2 font-medium">
-            {sideBar?.map((data, index) =>
-              data.subMenu?.length < 1 ? (
-                <Link href={data?.path} key={index + 1}>
-                  <li
-                    className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
-                      pathname == data?.path
-                        ? "dark:bg-gray-700 bg-gray-100"
-                        : ""
-                    }`}
-                  >
-                    {Icons(data?.icon)}
-                    <span className="ms-3">{data.title}</span>
-                  </li>
+    <TooltipProvider>
+      <aside className="fixed bg-[#320617] dark:bg-background inset-y-0 left-0 z-10 hidden w-14 flex-col border-r sm:flex">
+        <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+          <Link
+            href="/pages/dashboard"
+            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-[#6F042D] dark:bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+          >
+            <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
+            <span className="sr-only">Acme Inc</span>
+          </Link>
+          {sideBar.map(({ icon, path, title }) => (
+            <Tooltip key={title}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={path}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                >
+                  <Icons name={icon} className="h-5 w-5" />
+                  <span className="sr-only">{title}</span>
                 </Link>
-              ) : (
-                <li key={index + 1}>
-                  <button
-                    type="button"
-                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    aria-controls="dropdown-example"
-                    data-collapse-toggle="dropdown-example"
-                    onClick={() => setOpenSubmenu(!openSubmenu)}
-                  >
-                    {Icons(data?.icon)}
-                    <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                      {data.title}
-                    </span>
-                    {openSubmenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </button>
-                  <ul className="py-2 space-y-2">
-                    {data.subMenu?.map(
-                      (submenu, index_submenu) =>
-                        openSubmenu && (
-                          <Link href={submenu.path} key={index_submenu + 1}>
-                            <li
-                              className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
-                                pathname == submenu?.path
-                                  ? "dark:bg-gray-700 bg-gray-100"
-                                  : ""
-                              }`}
-                            >
-                              {Icons(submenu?.icon)}
-                              <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                                {submenu.title}
-                              </span>
-                            </li>
-                          </Link>
-                        )
-                    )}
-                  </ul>
-                </li>
-              )
-            )}
-          </ul>
-        </div>
+              </TooltipTrigger>
+              <TooltipContent side="right">{title}</TooltipContent>
+            </Tooltip>
+          ))}
+        </nav>
+        <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+          <ThemeButton />
+        </nav>
       </aside>
-
-      <div className="p-4 sm:ml-64" onClick={() => setOpenSidebar(false)}>
-        {children}
-      </div>
-    </div>
+    </TooltipProvider>
   );
 };
 
 export default Sidebar;
-
-const Icons = (NameIcon: IconType) => <NameIcon size={20} />;

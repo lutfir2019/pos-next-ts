@@ -1,5 +1,5 @@
 import { ParamsReq } from "@/types/product";
-import axiosInstance from "@/utils/axios";
+import axios from "@/lib/axios";
 
-export const fetchProducts = async (params?: ParamsReq) =>
-  await axiosInstance.get("https://dummyjson.com/products", { params });
+export const getProducts = async (params?: ParamsReq) =>
+  await axios.get("/products", { params });

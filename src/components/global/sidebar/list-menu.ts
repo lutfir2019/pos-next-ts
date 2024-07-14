@@ -1,30 +1,23 @@
 import { SideBar } from "@/types/sidebar";
-import { AiFillHome } from "react-icons/ai";
-import { FaCartShopping } from "react-icons/fa6";
-import { IoIosLogIn } from "react-icons/io";
+import { Home, Package, ShoppingCart } from "lucide-react";
 
 export const sideBar: SideBar[] = [
   {
     title: "Dashboard",
-    path: "/",
-    icon: AiFillHome,
-    subMenu: [
-      {
-        title: "Dashboard",
-        path: "/",
-        icon: AiFillHome,
-      },
-      {
-        title: "Product",
-        path: "/pages/product",
-        icon: FaCartShopping,
-      },
-    ],
+    path: "/pages/dashboard",
+    icon: Home,
+    subMenu: [],
   },
   {
-    title: "Auth",
-    path: "/auth",
-    icon: IoIosLogIn,
+    title: "Menu",
+    path: "/pages/menu",
+    icon: ShoppingCart,
+    subMenu: [],
+  },
+  {
+    title: "Products",
+    path: "/pages/product",
+    icon: Package,
     subMenu: [],
   },
 ];
