@@ -39,7 +39,7 @@ const InputCustom: React.FC<Props> = ({
         disabled={disabled}
         placeholder={placeholder}
         {...field}
-        className="disabled:bg-slate-200 w-[100%] dark:disabled:bg-slate-900 text-black dark:text-white placeholder:placeholder-gray-500 placeholder:dark:placeholder-gray-400"
+        className="disabled:bg-slate-200 w-[100%] dark:disabled:bg-slate-900 text-black dark:text-white placeholder:text-gray-500 placeholder:dark:text-gray-400"
       />
       {meta.touched && meta.error && (
         <span className="text-red-500">{meta.error}</span>
