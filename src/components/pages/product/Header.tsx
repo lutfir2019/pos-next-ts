@@ -16,7 +16,7 @@ const Header = () => {
           </span>
         </Button>
       </div>
-      <AddEdit open={open} />
+      <AddEdit open={open} onClose={setOpen} />
     </div>
   );
 };

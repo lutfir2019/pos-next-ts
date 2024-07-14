@@ -15,6 +15,7 @@ import FileUpload from "@/components/global/input/file";
 
 interface Props {
   open: boolean;
+  onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const validationSchema = yup.object({
@@ -43,7 +44,7 @@ const initialValues = {
   file: null,
 };
 
-const AddEdit: React.FC<Props> = ({ open }) => {
+const AddEdit: React.FC<Props> = ({ open, onClose }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const submit = (values: typeof initialValues) => {
@@ -57,7 +58,7 @@ const AddEdit: React.FC<Props> = ({ open }) => {
   return (
     <Modal
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={() => onClose(false)}
       className="bg-transparent min-w-full"
     >
       <Formik
@@ -96,7 +97,7 @@ const AddEdit: React.FC<Props> = ({ open }) => {
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => onClose(false)}
                   >
                     Close
                   </Button>
