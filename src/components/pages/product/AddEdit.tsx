@@ -93,8 +93,12 @@ const AddEdit: React.FC<Props> = ({ open }) => {
                   <Button type="submit" className="w-full">
                     Create an account
                   </Button>
-                  <Button variant="outline" className="w-full">
-                    Sign up with GitHub
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Close
                   </Button>
                 </div>
               </CardContent>
