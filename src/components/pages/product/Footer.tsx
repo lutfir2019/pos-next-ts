@@ -1,4 +1,4 @@
-import CustomPagination from "@/components/global/pagination/CustomPagination";
+import Pagination from "@/components/global/pagination/CustomPagination";
 import { CardFooter } from "@/components/ui/card";
 import { useProduct } from "@/stores/product/useProduct";
 import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
@@ -18,7 +18,7 @@ const Footer: React.FC<{
         <strong>{total ?? 0}</strong> products
       </div>
       <div className="w-full">
-        <CustomPagination
+        <Pagination
           className="hidden md:flex justify-end"
           page={page}
           total={total}
