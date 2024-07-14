@@ -47,7 +47,11 @@ const Footer: React.FC<{
             >
               <ChevronLeftCircle className="w-6 h-6" />
             </button>
-            <Button size="sm" variant="outline" className="cursor-text hover:bg-transparent hover:text-primary">
+            <Button
+              size="sm"
+              variant="outline"
+              className="cursor-text hover:bg-transparent hover:text-muted-foreground hover:dark:text-primary"
+            >
               <span>{productStore.data.skip}</span>
             </Button>
             <button
