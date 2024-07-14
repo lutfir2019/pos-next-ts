@@ -68,7 +68,7 @@ const AddEdit: React.FC<Props> = ({ open, onClose }) => {
       >
         {() => (
           <Form className="flex flex-col w-full items-center gap-5 p-5">
-            <Card className="mx-auto max-w-2xl">
+            <Card className="mx-auto w-full sm:max-w-2xl">
               <CardHeader>
                 <CardTitle className="text-xl">Sign Up</CardTitle>
                 <CardDescription>
