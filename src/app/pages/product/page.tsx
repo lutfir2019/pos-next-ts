@@ -28,16 +28,16 @@ const Page: NextPage = () => {
       <TabsContent value="all">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Products</CardTitle>
+            <CardTitle>Produk</CardTitle>
             <CardDescription>
-              Manage your products and view their sales performance.
+              Kelola produk Anda dan lihat kinerja penjualannya.
             </CardDescription>
           </CardHeader>
           <CardContent>
             {productStore.data?.products?.length > 0 ? (
               <TableProduct />
             ) : (
-              <div>Not found data</div>
+              <div>Data tidak di temukan</div>
             )}
           </CardContent>
           <Footer

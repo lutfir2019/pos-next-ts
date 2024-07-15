@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import Modal from "@/components/global/modal/modal";
@@ -12,23 +12,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import FileUpload from "@/components/global/input/file";
+import InputNumber from "@/components/global/input/inputNumber";
 
 interface Props {
   open: boolean;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
+  text?: string;
 }
 
 const validationSchema = yup.object({
-  // name: yup.string().required("Name is required").label("Name"),
-  // price: yup.number().required("Price is required").label("Price"),
-  // description: yup.string().label("Description"),
+  product_name: yup.string().required("Bidang ini wajib di isi"),
+  price_selling: yup.number().required("Bidang ini wajib di isi"),
+  price_purchase: yup.number().required("Bidang ini wajib di isi"),
   file: yup
     .mixed()
-    .required("File is required")
-    .test("fileSize", "File size is too large. (max. 1MB)", (value) => {
+    .required("Bidang ini wajib di isi")
+    .test("fileSize", "Ukuran file terlalu besar. (max. 1MB)", (value) => {
       return value && value instanceof File && value?.size <= 1024 * 1024; // 1MB
     })
-    .test("fileType", "Unsupported file format", (value) => {
+    .test("fileType", "Format file tidak mendukung", (value) => {
       return (
         value &&
         value instanceof File &&
@@ -38,28 +40,27 @@ const validationSchema = yup.object({
 });
 
 const initialValues = {
-  name: "",
-  price: "",
-  description: "",
+  id: null,
+  product_code: "",
+  product_name: "",
+  price_selling: "",
+  price_purchase: "",
   file: null,
 };
 
-const AddEdit: React.FC<Props> = ({ open, onClose }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const AddEdit: React.FC<Props> = ({ open, onClose, text }) => {
+  const isOpen = open;
+  const test = text;
 
   const submit = (values: typeof initialValues) => {
     console.log(values);
   };
 
-  useEffect(() => {
-    setIsOpen(open);
-  }, [open]);
-
   return (
     <Modal
       open={isOpen}
       onClose={() => onClose(false)}
-      className="bg-transparent min-w-full"
+      className="bg-transparent min-w-full shadow-none"
     >
       <Formik
         initialValues={initialValues}
@@ -67,39 +68,38 @@ const AddEdit: React.FC<Props> = ({ open, onClose }) => {
         onSubmit={submit}
       >
         {() => (
-          <Form className="flex flex-col w-full items-center gap-5 p-5">
+          <Form className="flex flex-col w-full items-center gap-5 p-5 shadow">
             <Card className="mx-auto w-full sm:max-w-2xl">
               <CardHeader>
-                <CardTitle className="text-xl">Sign Up</CardTitle>
+                <CardTitle className="text-xl">Tambah Produk</CardTitle>
                 <CardDescription>
-                  Enter your information to create an account
+                  Masukkan informasi untuk menambahkan produk baru {test}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4">
-                  <div className="grid grid-cols-2 gap-4 w-full max-sm:grid-cols-1">
-                    <div className="grid gap-2">
-                      <Input name="product_code" placeholder="Kode" disabled />
-                    </div>
-                    <div className="grid gap-2">
-                      <Input name="product_name" placeholder="Nama" />
-                    </div>
+                  <div className="flex flex-col gap-4">
+                    <Input name="product_code" placeholder="Kode" disabled />
+                    <Input name="product_name" placeholder="Nama" />
+                    <InputNumber
+                      name="price_selling"
+                      placeholder="Harga Jual / PCS"
+                    />
+                    <InputNumber
+                      name="price_purchase"
+                      placeholder="Harga Beli / PCS"
+                    />
                   </div>
-                  <div className="grid gap-2">
-                    <FileUpload text="Gambar" name="file" />
-                  </div>
-                  <div className="grid gap-2">
-                    <Input name="name" type="password" />
-                  </div>
+                  <FileUpload text="Gambar" name="file" />
                   <Button type="submit" className="w-full">
-                    Create an account
+                    Tambah Produk
                   </Button>
                   <Button
                     variant="outline"
                     className="w-full"
                     onClick={() => onClose(false)}
                   >
-                    Close
+                    Tutup
                   </Button>
                 </div>
               </CardContent>

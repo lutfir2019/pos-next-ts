@@ -72,17 +72,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         </div>
       )}
       <div className="flex flex-col gap-3">
-        <Label className="flex border rounded-md w-fit pr-3 items-center gap-2">
+        <Label className="flex border rounded-md w-fit p-1 pr-3 items-center gap-2">
           <Button
             type="button"
-            variant="default"
-            size="default"
+            variant="secondary"
+            size="sm"
             className="rounded-r-none"
             onClick={triggerFileInput}
           >
             {text}
           </Button>
-          <div className="flex mt-1 text-sm text-gray-600 dark:text-gray-300">
+          <div className="flex mt-1 text-sm font-normal text-gray-600 dark:text-gray-300">
             Uploaded file: {fileName ?? "No choice file"}
           </div>
           <Input
@@ -105,7 +105,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         )}
         {meta.touched && meta.error && (
-          <span className="text-red-500 text-sm">{meta.error}</span>
+          <span className="text-red-500 text-xs">{meta.error}</span>
         )}
         <p className="text-xs text-gray-600 dark:text-gray-300">
           Allowed file types: {allowedType.join(", ")}

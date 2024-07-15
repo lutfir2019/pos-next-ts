@@ -9,21 +9,26 @@ interface Props {
   label?: string;
   className?: string;
   placeholder?: string;
-  type?: React.HTMLInputTypeAttribute;
   disabled?: boolean;
   primary?: boolean;
 }
 
-const InputCustom: React.FC<Props> = ({
+const InputNumber: React.FC<Props> = ({
   label,
   name,
   className,
   placeholder,
-  type = "text",
   disabled,
   primary,
 }) => {
   const [field, meta] = useField(name);
+
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const inputValue = e.currentTarget.value;
+    if (!/^\d*$/.test(inputValue)) {
+      e.currentTarget.value = inputValue.replace(/\D/g, "");
+    }
+  };
 
   return (
     <div
@@ -35,11 +40,12 @@ const InputCustom: React.FC<Props> = ({
       </div>
       <Input
         id={name}
-        type={type}
+        type="text"
         disabled={disabled}
         placeholder={placeholder}
         {...field}
         className="disabled:bg-slate-200 w-[100%] dark:disabled:bg-slate-900 text-black dark:text-white placeholder:text-gray-500 placeholder:dark:text-gray-400"
+        onInput={handleInput}
       />
       {meta.touched && meta.error && (
         <span className="text-red-500 text-xs">{meta.error}</span>
@@ -48,4 +54,4 @@ const InputCustom: React.FC<Props> = ({
   );
 };
 
-export default InputCustom;
+export default InputNumber;

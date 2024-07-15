@@ -2,21 +2,16 @@
 
 import { useLoading } from "@/stores/useLoading";
 import { ImSpinner2 } from "react-icons/im";
-import { useEffect, useState } from "react";
 import Modal from "./modal";
 
 const LoadingPage = () => {
   const loadingStore = useLoading();
-  const [isOpen, setIsOpen] = useState<boolean>(
-    loadingStore.is_loading ?? false
-  );
-  useEffect(() => {
-    setIsOpen(loadingStore.is_loading ?? false);
-  }, [loadingStore.is_loading]);
+  const isOpen = loadingStore.is_loading ?? false;
+
   return (
     <Modal
       open={isOpen}
-      onClose={setIsOpen}
+      onClose={() => {}}
       className="bg-transparent shadow-none"
     >
       <div className="flex justify-center">

@@ -1,17 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useLayout } from "@/stores/useLayout";
 import Modal from "./modal";
 
 const NotificationPage = () => {
   const layoutStore = useLayout();
-  const [isOpen, setIsOpen] = useState<boolean>(layoutStore.show ?? false);
-  useEffect(() => {
-    setIsOpen(layoutStore.show ?? false);
-  }, [layoutStore.show]);
+  const isOpen = layoutStore.show ?? false;
+
   return (
-    <Modal open={isOpen} onClose={setIsOpen}>
+    <Modal open={isOpen} onClose={() => layoutStore.setLayout({ show: false })}>
       <div className="bg-slate-100 p-3 rounded-md">
         <p>{layoutStore.title}</p>
         <p>{layoutStore.message}</p>

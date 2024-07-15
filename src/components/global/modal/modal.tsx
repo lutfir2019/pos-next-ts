@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { cn } from "@/lib/utils";
 
@@ -10,10 +10,7 @@ interface ModalType {
 }
 
 const Modal: React.FC<ModalType> = ({ children, open, onClose, className }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(open);
-  useEffect(() => {
-    setIsOpen(open);
-  }, [open]);
+  const isOpen = open;
 
   return (
     <Dialog
