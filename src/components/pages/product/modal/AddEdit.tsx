@@ -54,6 +54,7 @@ const AddEdit: React.FC<Props> = ({ open, onClose, text }) => {
 
   const submit = (values: typeof initialValues) => {
     console.log(values);
+    onClose(false)
   };
 
   return (
