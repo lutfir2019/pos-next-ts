@@ -12,8 +12,10 @@ import Image from "next/image";
 interface Product {
   id: number;
   name: string;
+  quantity: number;
   price: number;
-  imageUrl: string;
+  note?: string;
+  imageUrl?: string;
 }
 
 interface ProductCardProps {
@@ -31,15 +33,15 @@ const sortText = (text: string) => {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   return (
-    <Card className="w-full full p-2 flex flex-col justify-between">
+    <Card className="w-full p-2 flex flex-col justify-between">
       <Image
-        src={product.imageUrl}
+        src={product.imageUrl ?? ""}
         alt={product.name}
         width={500}
         height={500}
         className="w-full h-auto object-cover rounded-t-lg"
       />
-      <CardHeader>
+      <CardHeader className="p-2">
         <CardTitle className="text-base font-semibold">
           {sortText(product.name)}
         </CardTitle>
@@ -47,8 +49,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
           Rp {product.price.toLocaleString()}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 px-3 pb-1">
         <Button
+          type="button"
           variant="default"
           className="mt-2 w-full"
           onClick={() => onAddToCart(product)}

@@ -101,8 +101,11 @@ Tussock: #CA9F4C
 
   body {
     @apply bg-background text-foreground;
-    scroll-behavior: smooth;
   }
+}
+
+body {
+  scroll-behavior: smooth;
 }
 
 .no-scrollbar::-webkit-scrollbar {
