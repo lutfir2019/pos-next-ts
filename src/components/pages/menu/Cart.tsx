@@ -42,7 +42,7 @@ const Cart: React.FC<CartProps> = ({
         <CardDescription>#08098999917</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="max-h-[50svh] overflow-auto no-scrollbar shadow">
+        <div className="max-h-[50svh] overflow-auto no-scrollbar shadow p-1.5">
           {items.length === 0 ? (
             <p className="text-center text-gray-500">Your cart is empty.</p>
           ) : (
