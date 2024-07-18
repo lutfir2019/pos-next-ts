@@ -19,7 +19,7 @@ const Page: NextPage = () => {
   const productStore = useProduct();
 
   useEffect(() => {
-    productStore.getProduct({ limit: 10, skip: 1 });
+    useProduct.getState().getProduct({ limit: 10, skip: 1 });
   }, []);
 
   return (

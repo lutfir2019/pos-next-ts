@@ -26,24 +26,26 @@ const InputCustom: React.FC<Props> = ({
   const [field, meta] = useField(name);
 
   return (
-    <div
-      className={cn("grid w-full min-w-[100%] items-center gap-1.5", className)}
-    >
+    <div className={cn("grid w-full items-center gap-1.5", className)}>
       <div className="flex gap-1">
         {label && <Label htmlFor={name}>{label}</Label>}
         {primary && <span className="text-red-500 -translate-y-[7px]">*</span>}
       </div>
-      <Input
-        id={name}
-        type={type}
-        disabled={disabled}
-        placeholder={placeholder}
-        {...field}
-        className="disabled:bg-slate-200 w-[100%] dark:disabled:bg-slate-900 text-black dark:text-white placeholder:text-gray-500 placeholder:dark:text-gray-400"
-      />
-      {meta.touched && meta.error && (
-        <span className="text-red-500 text-xs">{meta.error}</span>
-      )}
+      <div className="relative pb-[1.1rem]">
+        <Input
+          id={name}
+          type={type}
+          disabled={disabled}
+          placeholder={placeholder}
+          {...field}
+          className="disabled:bg-slate-200 w-[100%] dark:disabled:bg-slate-900 text-black dark:text-white placeholder:text-gray-500 placeholder:dark:text-gray-400"
+        />
+        {meta.touched && meta.error && (
+          <span className="text-red-500 text-xs absolute bottom-0 left-1">
+            {meta.error}
+          </span>
+        )}
+      </div>
     </div>
   );
 };

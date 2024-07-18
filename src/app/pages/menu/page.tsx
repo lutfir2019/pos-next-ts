@@ -126,7 +126,7 @@ const Page: NextPage = () => {
                     POS Application
                   </h1>
                   <div className="flex gap-3 flex-col md:flex-row">
-                    <div className="h-svh overflow-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full content-start">
+                    <div className="h-svh overflow-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full content-start">
                       {products.map((product) => (
                         <ProductCard
                           key={product.id}

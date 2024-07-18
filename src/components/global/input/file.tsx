@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface ImageUploadProps {
   name: string;
@@ -97,10 +98,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         </Label>
         {base64Image && base64Image?.includes("data:image") && (
           <div className="flex justify-left mt-4">
-            <img
+            <Image
               src={base64Image}
               alt="Preview"
               className="max-w-[7rem] h-auto"
+              width={500}
+              height={500}
             />
           </div>
         )}

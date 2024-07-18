@@ -22,8 +22,9 @@ interface Props {
 
 const validationSchema = yup.object({
   product_name: yup.string().required("Bidang ini wajib di isi"),
-  price_selling: yup.number().required("Bidang ini wajib di isi"),
-  price_purchase: yup.number().required("Bidang ini wajib di isi"),
+  price_selling: yup.number().min(1000, "Minimal Rp.1000 (Seribu)").required("Bidang ini wajib di isi"),
+  price_purchase: yup.number().min(1000, "Minimal Rp.1000 (Seribu)").required("Bidang ini wajib di isi"),
+  quantity: yup.number().min(1, "Minimal 1 Pcs").required("Bidang ini wajib di isi"),
   file: yup
     .mixed()
     .required("Bidang ini wajib di isi")
@@ -43,8 +44,9 @@ const initialValues = {
   id: null,
   product_code: "",
   product_name: "",
-  price_selling: "",
-  price_purchase: "",
+  price_selling: 0,
+  price_purchase: 0,
+  quantity: 0,
   file: null,
 };
 
@@ -54,7 +56,7 @@ const AddEdit: React.FC<Props> = ({ open, onClose, text }) => {
 
   const submit = (values: typeof initialValues) => {
     console.log(values);
-    onClose(false)
+    onClose(false);
   };
 
   return (
@@ -78,9 +80,12 @@ const AddEdit: React.FC<Props> = ({ open, onClose, text }) => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4">
-                  <div className="flex flex-col gap-4">
-                    <Input name="product_code" placeholder="Kode" disabled />
+                <div className="grid">
+                  <div className="flex flex-col">
+                    <div className="flex w-full flex-col sm:flex-row gap-2">
+                      <Input name="product_code" placeholder="Kode" disabled />
+                      <InputNumber name="quantity" placeholder="Pcs" />
+                    </div>
                     <Input name="product_name" placeholder="Nama" />
                     <InputNumber
                       name="price_selling"
