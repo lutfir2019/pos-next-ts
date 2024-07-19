@@ -63,7 +63,7 @@ export default function Component() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Penjualan Hari Ini</CardTitle>
+        <CardTitle>Penjualan Harian</CardTitle>
         <CardDescription>
           Penjualan dari pukul 10:00 - 22:00 WIB
         </CardDescription>
