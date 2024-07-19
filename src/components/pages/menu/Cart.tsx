@@ -36,7 +36,7 @@ const Cart: React.FC<CartProps> = ({
   );
 
   return (
-    <Card className="w-full md:max-w-xs">
+    <Card className="w-full h-fit md:max-w-xs">
       <CardHeader>
         <CardTitle>Order list</CardTitle>
         <CardDescription>#08098999917</CardDescription>
