@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -18,30 +17,32 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useEffect } from "react";
+
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { hour: "10:00", sales: 5 },
+  { hour: "11:00", sales: 10 },
+  { hour: "12:00", sales: 50 },
+  { hour: "13:00", sales: 100 },
+  { hour: "14:00", sales: 120 },
+  { hour: "15:00", sales: 90 },
+  { hour: "16:00", sales: 80 },
+  { hour: "17:00", sales: 70 },
+  { hour: "18:00", sales: 10 },
+  { hour: "19:00", sales: 50 },
+  { hour: "20:00", sales: 80 },
+  { hour: "21:00", sales: 40 },
+  { hour: "22:00", sales: 20 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  sales: {
+    label: "Sales",
     color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
-const CustomChart: React.FC = () => {
-  const data = chartData;
-  const config = chartConfig;
-
+export default function Component() {
   // handle error (XAxis: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.)
   useEffect(() => {
     const originalConsoleError = console.error;
@@ -62,39 +63,55 @@ const CustomChart: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Penjualan Hari Ini</CardTitle>
+        <CardDescription>
+          Penjualan dari pukul 10:00 - 22:00 WIB
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={config}>
-          <BarChart accessibilityLayer data={data}>
+        <ChartContainer config={chartConfig}>
+          <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="hour"
               tickLine={false}
-              tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickMargin={8}
             />
+            <YAxis />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+              content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar dataKey="desktop" fill={config.desktop.color} radius={4} />
-            <Bar dataKey="mobile" fill={config.mobile.color} radius={4} />
-          </BarChart>
+            <Area
+              dataKey="sales"
+              type="natural"
+              fill={chartConfig.sales.color}
+              fillOpacity={0.4}
+              stroke={chartConfig.sales.color}
+            />
+          </AreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              Trending up by 5.2% today <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-2 leading-none text-muted-foreground">
+              Showing sales data for the last 24 hours
+            </div>
+          </div>
         </div>
       </CardFooter>
     </Card>
   );
-};
-
-export default CustomChart;
+}
