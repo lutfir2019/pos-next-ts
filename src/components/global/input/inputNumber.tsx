@@ -31,12 +31,12 @@ const InputNumber: React.FC<Props> = ({
   };
 
   return (
-    <div className={cn("grid w-full items-center gap-1.5", className)}>
+    <div className={cn("grid w-full items-center", className)}>
       <div className="flex gap-1">
         {label && <Label htmlFor={name}>{label}</Label>}
         {primary && <span className="text-red-500 -translate-y-[7px]">*</span>}
       </div>
-      <div className="relative pb-[1.1rem]">
+      <div className="relative pb-[1.2rem]">
         <Input
           id={name}
           type="text"
