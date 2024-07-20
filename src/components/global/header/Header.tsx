@@ -79,7 +79,7 @@ const Header = () => {
             className="overflow-hidden rounded-full"
           >
             <Image
-              src="/image/orange.jpg"
+              src="/images/orange.jpg"
               width={36}
               height={36}
               alt="Avatar"
