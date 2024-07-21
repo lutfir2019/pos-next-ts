@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,17 +20,19 @@ import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import AddEdit from "./modal/AddEdit";
 import Delete from "./modal/Delete";
+import { formattedDate } from "@/composables/handleDate";
+import { ProductType } from "@/types/products";
 
 const TableProduct = () => {
   const productStore = useProduct();
-  const dataProduct = productStore.data?.products;
+  const dataProduct = productStore.data;
 
   const [open, setOpen] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [deleteData, setDeleteData] = useState<number | null>(null);
-  const [row, setRow] = useState("test");
+  const [row, setRow] = useState<ProductType | null>(null);
 
-  const handleEdit = (data: string) => {
+  const handleEdit = (data: ProductType) => {
     setRow(data);
     setOpen(true);
   };
@@ -55,9 +56,9 @@ const TableProduct = () => {
               <span className="sr-only">Image</span>
             </TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Tags</TableHead>
-            <TableHead className="hidden md:table-cell">Price</TableHead>
-            <TableHead className="hidden md:table-cell">Total Sales</TableHead>
+            <TableHead className="hidden md:table-cell">Kode</TableHead>
+            <TableHead className="hidden md:table-cell">Stok</TableHead>
+            <TableHead>Harga</TableHead>
             <TableHead className="hidden md:table-cell">Created at</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
@@ -70,29 +71,23 @@ const TableProduct = () => {
               <TableRow key={data.id}>
                 <TableCell className="hidden sm:table-cell">
                   <Image
-                    alt={data.title}
+                    alt={data.name}
                     className="aspect-square rounded-md object-cover"
                     height="64"
-                    src={data.thumbnail}
+                    src={data?.file ?? ""}
                     width="64"
                   />
                 </TableCell>
-                <TableCell className="font-medium">{data.title}</TableCell>
-                <TableCell>
-                  {data.tags?.map((tags) => (
-                    <Badge variant="outline" key={tags}>
-                      {tags}
-                    </Badge>
-                  ))}
+                <TableCell className="font-medium">{data.name}</TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {data.product_code}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  ${data.price}
+                  {data.quantity}
                 </TableCell>
+                <TableCell>RP.{data.price_selling?.toLocaleString()}</TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {data.minimumOrderQuantity}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {new Date(data.meta.createdAt).toDateString()}
+                  {formattedDate(data.created_at)}
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>
@@ -104,10 +99,12 @@ const TableProduct = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem onClick={() => handleEdit(data.title)}>
+                      <DropdownMenuItem onClick={() => handleEdit(data)}>
                         Edit
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => toggleDelete(data.id)}>
+                      <DropdownMenuItem
+                        onClick={() => toggleDelete(data?.id ?? 0)}
+                      >
                         Hapus
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -117,7 +114,7 @@ const TableProduct = () => {
             ))}
         </TableBody>
       </Table>
-      <AddEdit open={open} onClose={setOpen} text={row} />
+      <AddEdit open={open} onClose={setOpen} value={row} />
       <Delete
         open={openDelete}
         onClose={setOpenDelete}

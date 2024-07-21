@@ -35,12 +35,12 @@ const Footer: React.FC<{
           <div className="flex gap-2 justify-end text-base md:hidden">
             <button
               type="button"
-              disabled={productStore.data.skip == 1}
+              disabled={productStore.meta.pagination.page == 1}
               className="cursor-pointer disabled:text-secondary"
               onClick={async () =>
                 await productStore.getProduct({
                   limit: 10,
-                  skip: productStore.data.skip - 1,
+                  skip: productStore.meta.pagination.page - 1,
                   is_no_soft_loading: true,
                 })
               }
@@ -52,16 +52,16 @@ const Footer: React.FC<{
               variant="outline"
               className="cursor-text hover:bg-transparent hover:text-muted-foreground hover:dark:text-primary"
             >
-              <span>{productStore.data.skip}</span>
+              <span>{productStore.meta.pagination.page}</span>
             </Button>
             <button
               type="button"
-              disabled={productStore.data.skip == productStore.data.total}
+              disabled={productStore.meta.pagination.page == productStore.meta.pagination.total_pages}
               className="cursor-pointer disabled:text-secondary"
               onClick={async () =>
                 await productStore.getProduct({
                   limit: 10,
-                  skip: productStore.data.skip + 1,
+                  skip: productStore.meta.pagination.page + 1,
                   is_no_soft_loading: true,
                 })
               }

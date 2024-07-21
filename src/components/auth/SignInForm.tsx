@@ -6,14 +6,11 @@ import { Form, Formik } from "formik";
 import Input from "@/components/global/input/inputCustom";
 import Password from "@/components/global/input/password";
 import React from "react";
+import { useAuth } from "@/stores/auth/useAuth";
+import { SignInType } from "@/types/auth";
 
 interface Props {
   onToggleForm: any;
-}
-
-interface SignInType {
-  email: string;
-  password: string;
 }
 
 const validationSchema = yup.object({
@@ -30,11 +27,13 @@ const initialValues: SignInType = {
 };
 
 const SignInForm: React.FC<Props> = ({ onToggleForm }) => {
+  const useStore = useAuth();
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={async (values) => await useStore.login(values)}
     >
       {() => (
         <Form className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -57,12 +56,12 @@ const SignInForm: React.FC<Props> = ({ onToggleForm }) => {
                   />
                   <Password name="password" label="Password" primary />
                 </div>
-                <Button type="submit" className="w-full mt-4">
+                <Button className="w-full mt-4" disabled={useStore.is_loading}>
                   Sign In
                 </Button>
               </div>
               <div className="mt-6 text-center text-sm">
-                Don't have an account? ?{" "}
+                Don&apos;t have an account? ?{" "}
                 <Link href="#" onClick={onToggleForm} className="underline">
                   Sign up
                 </Link>

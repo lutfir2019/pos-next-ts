@@ -1,21 +1,33 @@
-import { AxiosError } from "axios";
-import { LoadingType, Response } from "../globalType";
+import { LoadingType } from "../globalType";
 
 export type Auth = {
-  unm?: string;
-  pass?: string;
+  data: Data;
+  message: string;
+  status: string;
+  token: string;
 };
 
-export interface AuthToken extends Auth {
-  message?: string;
-  token?: string;
-}
+export type Data = {
+  ID: number;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+  DeletedAt: null;
+  email: string;
+  name: string;
+  role: string;
+};
+
+export type SignInType = {
+  email: string;
+  password: string;
+};
 
 export interface State extends LoadingType {
-  data: AuthToken;
-  error: AxiosError<{ message: string }> | null;
+  data: Auth | null;
 }
 
 export type Action = {
-  login: (payload: Auth) => Promise<Response<AuthToken>>;
+  login: (payload: SignInType) => Promise<Auth>;
+  signOut: () => void;
+  getToken: () => string;
 };

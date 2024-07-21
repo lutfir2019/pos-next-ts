@@ -10,8 +10,17 @@ export type LoadingType = {
 
 export type Response<T = any> = AxiosResponse<T> | AxiosError;
 
+export type DefaultType = null | [] | {};
+
 export type IconsType =
   | IconType
   | ForwardRefExoticComponent<
       Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
     >;
+
+export type Pagination = {
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+};

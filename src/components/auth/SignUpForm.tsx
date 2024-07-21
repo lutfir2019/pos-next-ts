@@ -6,17 +6,11 @@ import { Form, Formik } from "formik";
 import Input from "@/components/global/input/inputCustom";
 import Password from "@/components/global/input/password";
 import React from "react";
+import { SignUpType } from "@/types/users";
+import { useUser } from "@/stores/user/useUser";
 
 interface Props {
   onToggleForm: any;
-}
-
-interface SignUpType {
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  name: string;
-  role: string;
 }
 
 const validationSchema = yup.object({
@@ -41,11 +35,18 @@ const initialValues: SignUpType = {
 };
 
 const SignUpForm: React.FC<Props> = ({ onToggleForm }) => {
+  const userStore = useUser();
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={async (values, { resetForm }) =>
+        await userStore.submitUser(values).then(() => {
+          onToggleForm();
+          resetForm();
+        })
+      }
     >
       {() => (
         <Form className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -88,9 +89,7 @@ const SignUpForm: React.FC<Props> = ({ onToggleForm }) => {
                     primary
                   />
                 </div>
-                <Button type="submit" className="w-full mt-4">
-                  Create an account
-                </Button>
+                <Button className="w-full mt-4">Create an account</Button>
               </div>
               <div className="mt-6 text-center text-sm">
                 Already have an account?{" "}

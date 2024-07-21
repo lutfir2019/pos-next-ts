@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Header from "@/components/pages/product/Header";
 import TableProduct from "@/components/pages/product/Table";
 import Footer from "@/components/pages/product/Footer";
+import NoData from "@/components/global/table/NoData";
 
 const Page: NextPage = () => {
   const productStore = useProduct();
@@ -34,16 +35,12 @@ const Page: NextPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {productStore.data?.products?.length > 0 ? (
-              <TableProduct />
-            ) : (
-              <div>Data tidak di temukan</div>
-            )}
+            {productStore.data?.length > 0 ? <TableProduct /> : <NoData />}
           </CardContent>
           <Footer
-            page={productStore.data.skip}
-            total={productStore.data.total}
-            perPage={productStore.data.limit}
+            page={productStore.meta.pagination.page}
+            total={productStore.meta.pagination.total_pages}
+            perPage={productStore.meta.pagination.per_page}
           />
         </Card>
       </TabsContent>

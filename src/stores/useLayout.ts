@@ -6,6 +6,7 @@ type State = {
   title?: string;
   icon?: string;
   type?: "success" | "error" | "warning" | "info";
+  error?: string[];
 };
 
 type Action = {
@@ -18,5 +19,6 @@ export const useLayout = create<State & Action>((set) => ({
   message: "",
   icon: "",
   type: "info",
+  error: [],
   setLayout: (state) => set(state),
 }));

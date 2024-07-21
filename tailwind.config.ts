@@ -56,10 +56,20 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        'gallery': '#F0EEEE',
-        'tamarind': '#3A1628',
-        'cerise-red': '#DB3367',
-        'tussock': '#CA9F4C', // Optional hover color for cerise-red
+        gallery: "#F0EEEE",
+        tamarind: "#3A1628",
+        "cerise-red": "#DB3367",
+        tussock: "#CA9F4C", // Optional hover color for cerise-red
+
+        // notification color
+        error: "#ef4444",
+        warning: "#f59e0b",
+        success: "#22c55e",
+        info: "#6366f1",
+        "error-hover": "#dc2626",
+        "warning-hover": "#eab308",
+        "success-hover": "#10b981",
+        "info-hover": "#5b21b6",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -75,10 +85,15 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        spin: {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "spin-slow": "spin 2s linear infinite",
       },
     },
   },

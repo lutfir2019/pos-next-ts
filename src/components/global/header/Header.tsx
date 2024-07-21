@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -23,8 +25,11 @@ import { sideBar } from "../sidebar/list-menu";
 import Icons from "../icons/Icons";
 import { ThemeButton } from "../button/ThemeButton";
 import CustomBreadcrump from "./CustomBreadcrumb";
+import { useAuth } from "@/stores/auth/useAuth";
 
 const Header = () => {
+  const authStore = useAuth();
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
@@ -93,7 +98,9 @@ const Header = () => {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => authStore.signOut()}>
+            Logout
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

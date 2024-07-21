@@ -1,25 +1,35 @@
+import Cookies from "js-cookie";
 import { postLogin } from "@/api/auth/request";
-import { Action, AuthToken, State } from "@/types/auth";
-import { Response } from "@/types/globalType";
+import { Action, State } from "@/types/auth";
 import { create } from "zustand";
 
-export const useAuth = create<State & Action>((set) => ({
-  data: {},
+export const useAuth = create<State & Action>((set, get) => ({
+  data: null,
   is_loading: false,
   is_soft_loading: false,
-  error: null,
   login: async (state) => {
     set({ is_loading: true, is_soft_loading: true });
     try {
-      const res: Response<{ data: AuthToken }> = await postLogin(state);
-      set({ data: res.data?.data });
-      return res;
-    } catch (error: any) {
-      console.error("Failed to request:", error);
-      set({ error });
-      return error;
+      const res = await postLogin(state);
+      const token = res?.data?.token;
+      Cookies.set("token", token);
+      set({ data: res?.data });
+      window.location.href = "/pages";
+      return res?.data;
     } finally {
       set({ is_loading: false, is_soft_loading: false });
     }
+  },
+
+  signOut: () => {
+    set({ data: null });
+    Cookies.remove("token");
+    window.location.href = "/auth/";
+  },
+
+  getToken: () => {
+    const { data } = get();
+    const token = "Bearer " + (data?.token ?? Cookies.get("token"));
+    return token ?? "";
   },
 }));

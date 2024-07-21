@@ -43,19 +43,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target?.files && !event.target?.files?.length) return;
+    if (!event.target?.files?.length) return;
+    const file = event.target.files[0];
     field.onChange(event);
-    const file = event.target?.files?.[0];
-    setFileName(file?.name);
-    const fileExtension = `.${file?.name.split(".").pop()?.toLowerCase()}`;
+
+    if (!file) return;
+
+    const fileExtension = `.${file.name.split(".").pop()?.toLowerCase()}`;
     if (!allowedType.includes(fileExtension)) {
       alert("File type not allowed.");
       setBase64Image(null);
       return;
     }
+
     const base64 = await toBase64(file);
     setBase64Image(base64);
-    helpers.setValue(file);
+    setFileName(file.name);
+    helpers.setValue(base64);
   };
 
   const triggerFileInput = () => {
@@ -79,12 +83,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             variant="secondary"
             size="sm"
             className="rounded-r-none"
+            disabled={disabled}
             onClick={triggerFileInput}
           >
             {text}
           </Button>
           <div className="flex mt-1 text-sm font-normal text-gray-600 dark:text-gray-300">
-            Uploaded file: {fileName ?? "No choice file"}
+            Uploaded file: {fileName ?? "No file chosen"}
           </div>
           <Input
             ref={fileInput}
@@ -93,10 +98,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             type="file"
             className="hidden"
             onChange={handleChange}
-            accept={allowedType.join(", ")}
+            accept={allowedType.join(",")}
           />
         </Label>
-        {base64Image && base64Image?.includes("data:image") && (
+        {base64Image && base64Image.includes("data:image") && (
           <div className="flex justify-left mt-4">
             <Image
               src={base64Image}

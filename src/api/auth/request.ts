@@ -1,5 +1,6 @@
-import { Auth } from "@/types/auth";
-import axiosInstance from "@/lib/axios";
+import axios from "@/lib/axios";
+import { Auth, SignInType } from "@/types/auth";
 
-export const postLogin = async (parmas: Auth) =>
-  await axiosInstance.post("/auth/login", parmas);
+export const postLogin = async (payload: SignInType) => {
+  return axios.post<Auth>("auth/login", payload);
+};

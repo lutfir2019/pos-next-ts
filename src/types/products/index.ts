@@ -1,5 +1,4 @@
-import { AxiosError } from "axios";
-import { LoadingType, Response } from "../globalType";
+import { LoadingType, Pagination, Response } from "../globalType";
 
 export interface ParamsReq {
   limit?: number;
@@ -8,12 +7,13 @@ export interface ParamsReq {
 }
 
 export interface State extends LoadingType {
-  data: Product;
-  error: AxiosError | null;
+  data: ProductType[];
+  meta: { pagination: Pagination };
 }
 
 export type Action = {
   getProduct: (params?: ParamsReq) => Promise<Response<Product>>;
+  submitProduct: (params?: ProductType) => Promise<ProductType[]>;
 };
 
 export interface Product {
@@ -52,3 +52,14 @@ export interface Meta {
   barcode: string;
   qrCode: string;
 }
+
+export type ProductType = {
+  id: number | null;
+  product_code?: string;
+  name: string;
+  quantity: number;
+  price_selling: number;
+  price_purchase: number;
+  file: string | null;
+  created_at?: string;
+};

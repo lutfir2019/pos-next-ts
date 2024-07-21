@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useLoading } from "@/stores/useLoading";
-import { useLayout } from "@/stores/useLayout";
+import { handleAxiosError } from "@/composables/handleError";
+import { useAuth } from "@/stores/auth/useAuth";
 
 const createAxiosInstance = () => {
   const axiosInstance = axios.create({
@@ -14,11 +15,16 @@ const createAxiosInstance = () => {
   axiosInstance.interceptors.request.use(
     (config) => {
       useLoading.getState().setLoading({ is_loading: true });
+      let token = useAuth.getState().getToken();
+      if (token) {
+        config.headers["Authorization"] = `${token}`;
+      }
       return config;
     },
     (error: AxiosError) => {
       useLoading.getState().setLoading({ is_loading: true });
       console.error("Request error:", error);
+      handleAxiosError(error)
       return Promise.reject(error);
     }
   );
@@ -31,14 +37,7 @@ const createAxiosInstance = () => {
     (error: AxiosError) => {
       useLoading.getState().setLoading({ is_loading: false });
       console.error("Response error:", error);
-      if (error.code == "NETWORK_ERROR") {
-        useLayout.getState().setLayout({
-          show: true,
-          title: "Error",
-          message: "Network Error",
-          type: "error",
-        });
-      }
+      handleAxiosError(error)
       return Promise.reject(error);
     }
   );

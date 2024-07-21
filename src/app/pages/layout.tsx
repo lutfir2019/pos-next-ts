@@ -1,10 +1,23 @@
+"use client";
+
 import Header from "@/components/global/header/Header";
 import Sidebar from "@/components/global/sidebar/Sidebar";
+import { useAuth } from "@/stores/auth/useAuth";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface Children {
   children: React.ReactNode;
 }
 const Layout = ({ children }: Readonly<Children>) => {
+  const authStore = useAuth();
+  const router = useRouter();
+  const pathName = usePathname();
+
+  useEffect(() => {
+    if (!authStore.getToken()) return router.replace("/auth");
+  }, [pathName, authStore, router]);
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <Sidebar />
