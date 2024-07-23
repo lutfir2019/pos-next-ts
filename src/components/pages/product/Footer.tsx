@@ -1,15 +1,17 @@
+import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
+import React from "react";
+
 import Pagination from "@/components/global/pagination/CustomPagination";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { useProduct } from "@/stores/product/useProduct";
-import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
-import React from "react";
 
 const Footer: React.FC<{
   page: number;
   total: number;
   perPage: number;
-}> = ({ page, total, perPage }) => {
+  totalPages: number;
+}> = ({ page, total, perPage, totalPages }) => {
   const productStore = useProduct();
 
   return (
@@ -22,25 +24,25 @@ const Footer: React.FC<{
         <Pagination
           className="hidden md:flex justify-end"
           page={page}
-          total={total}
+          totalPages={totalPages}
           onPageChange={async (val) =>
-            await productStore.getProduct({
-              limit: 10,
-              skip: val,
+            await productStore.get({
+              per_page: 10,
+              page: val,
               is_no_soft_loading: true,
             })
           }
         />
-        {page > 0 && (
+        {totalPages > 0 && (
           <div className="flex gap-2 justify-end text-base md:hidden">
             <button
               type="button"
               disabled={productStore.meta.pagination.page == 1}
               className="cursor-pointer disabled:text-secondary"
               onClick={async () =>
-                await productStore.getProduct({
-                  limit: 10,
-                  skip: productStore.meta.pagination.page - 1,
+                await productStore.get({
+                  per_page: 10,
+                  page: productStore.meta.pagination.page - 1,
                   is_no_soft_loading: true,
                 })
               }
@@ -56,12 +58,15 @@ const Footer: React.FC<{
             </Button>
             <button
               type="button"
-              disabled={productStore.meta.pagination.page == productStore.meta.pagination.total_pages}
+              disabled={
+                productStore.meta.pagination.page ==
+                productStore.meta.pagination.total_pages
+              }
               className="cursor-pointer disabled:text-secondary"
               onClick={async () =>
-                await productStore.getProduct({
-                  limit: 10,
-                  skip: productStore.meta.pagination.page + 1,
+                await productStore.get({
+                  per_page: 10,
+                  page: productStore.meta.pagination.page + 1,
                   is_no_soft_loading: true,
                 })
               }

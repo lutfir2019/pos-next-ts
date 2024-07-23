@@ -1,9 +1,12 @@
 "use client";
 
+import { FieldArray, Form, Formik } from "formik";
+import { NextPage } from "next";
+
 import Cart from "@/components/pages/menu/Cart";
 import ProductCard from "@/components/pages/menu/ProductCard";
-import { NextPage } from "next";
-import { FieldArray, Form, Formik } from "formik";
+import { useProduct } from "@/stores/product/useProduct";
+import { useEffect } from "react";
 
 interface CartItem {
   id: number;
@@ -15,71 +18,19 @@ interface CartItem {
 }
 
 const Page: NextPage = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Milkshake choco with oreo",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 2,
-      name: "Pineapple juice with pandan leaf",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 3,
-      name: "Indomie noddles extra spicy",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 4,
-      name: "Creamy donuts with sugar topping",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 5,
-      name: "Mix fruites 3 variant",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 6,
-      name: "Chicken roast with spinach",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 7,
-      name: "Sweet maracons",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 8,
-      name: "Big burger extra brisket",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-    {
-      id: 9,
-      name: "Waffle with strawberry",
-      price: 35000,
-      note: "",
-      imageUrl: "/images/orange.jpg",
-    },
-  ] as CartItem[];
+  const productStore = useProduct();
+
+  useEffect(() => {
+    productStore.get({ page: 1, per_page: 20 });
+  }, []);
+
+  const products = productStore.data?.map((item) => ({
+    id: item.id,
+    name: item.name,
+    price: item.price_selling,
+    note: "",
+    imageUrl: item.file,
+  })) as CartItem[];
 
   const initialValues = { cartItems: [] as CartItem[] };
 
@@ -127,7 +78,7 @@ const Page: NextPage = () => {
                   </h1>
                   <div className="flex gap-3 flex-col md:flex-row">
                     <div className="h-svh overflow-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full content-start">
-                      {products.map((product) => (
+                      {products?.map((product) => (
                         <ProductCard
                           key={product.id}
                           product={product}

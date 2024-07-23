@@ -1,5 +1,6 @@
-import { LoadingType } from "@/types/globalType";
 import { create } from "zustand";
+
+import { LoadingType } from "@/types/globalType";
 
 type Action = {
   setLoading: (state: LoadingType) => void;

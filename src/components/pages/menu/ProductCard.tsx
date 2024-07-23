@@ -1,13 +1,14 @@
+import Image from "next/image";
 import React from "react";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardHeader,
   CardContent,
-  CardTitle,
   CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 interface Product {
   id: number;

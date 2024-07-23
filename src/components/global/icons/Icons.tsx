@@ -1,5 +1,6 @@
-import { IconsType } from "@/types/globalType";
 import React from "react";
+
+import { IconsType } from "@/types/globalType";
 
 interface IconsProps {
   name: IconsType;

@@ -1,6 +1,7 @@
-import React from "react";
 import "./NoData.css";
+
 import { FolderOpen } from "lucide-react";
+import React from "react";
 
 const NoData: React.FC = () => {
   return (

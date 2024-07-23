@@ -1,8 +1,11 @@
+import { Form, Formik } from "formik";
 import React from "react";
-import { Formik, Form } from "formik";
 import * as yup from "yup";
-import Modal from "@/components/global/modal/modal";
+
+import FileUpload from "@/components/global/input/file";
 import Input from "@/components/global/input/inputCustom"; // Pastikan impor komponen ini benar
+import InputNumber from "@/components/global/input/inputNumber";
+import Modal from "@/components/global/modal/modal";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,11 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import FileUpload from "@/components/global/input/file";
-import InputNumber from "@/components/global/input/inputNumber";
+import { calculateBase64Size } from "@/composables/calculateBase64";
 import { useProduct } from "@/stores/product/useProduct";
 import { ProductType } from "@/types/products";
-import { calculateBase64Size } from "@/composables/calculateBase64";
 
 interface Props {
   open: boolean;
@@ -69,14 +70,25 @@ const AddEdit: React.FC<Props> = ({ open, onClose, value }) => {
 
   const submit = async (values: typeof initialValues) => {
     const { price_purchase, price_selling, quantity, file, ...rest } = values;
-    await productStore.submitProduct({
+
+    onClose(false);
+    // for update product
+    if (values?.id)
+      return await productStore.update({
+        price_purchase: Number(price_purchase),
+        price_selling: Number(price_selling),
+        quantity: Number(quantity),
+        file: file?.toString() ?? "",
+        ...rest,
+      });
+
+    await productStore.create({
       price_purchase: Number(price_purchase),
       price_selling: Number(price_selling),
       quantity: Number(quantity),
       file: file?.toString() ?? "",
       ...rest,
     });
-    onClose(false);
   };
 
   return (
@@ -97,9 +109,7 @@ const AddEdit: React.FC<Props> = ({ open, onClose, value }) => {
                 <CardTitle className="text-xl">
                   {value?.id ? "Edit" : "Tambah"} Produk
                 </CardTitle>
-                <CardDescription>
-                  Masukkan informasi produk
-                </CardDescription>
+                <CardDescription>Masukkan informasi produk</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid">
@@ -122,7 +132,7 @@ const AddEdit: React.FC<Props> = ({ open, onClose, value }) => {
 
                   <div className="flex flex-col w-full gap-2 mt-3">
                     <Button type="submit" className="w-full">
-                      Tambah Produk
+                      {value?.id ? "Edit" : "Tambah"} Produk
                     </Button>
                     <Button
                       type="button"

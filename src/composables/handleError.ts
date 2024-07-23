@@ -1,6 +1,7 @@
+import { AxiosError } from "axios";
+
 import { useAuth } from "@/stores/auth/useAuth";
 import { useLayout } from "@/stores/useLayout";
-import { AxiosError } from "axios";
 
 interface ErrorResponse {
   message?: string;
@@ -45,10 +46,10 @@ export const handleAxiosError = (err: AxiosError) => {
         useAuth.getState().signOut();
         break;
       case 403:
-        errorMessage = "Invalid token, please log in again.";
+        errorMessage = "You do not have permission to perform this action.";
         useLayout.getState().setLayout({
           show: true,
-          title: "Invalid Token",
+          title: "Access Denied",
           message: errorMessage,
           type: "error",
         });

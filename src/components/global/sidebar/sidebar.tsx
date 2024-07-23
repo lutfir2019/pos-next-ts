@@ -1,16 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { sideBar } from "./list-menu";
 import { Package2 } from "lucide-react";
+import Link from "next/link";
+
+import { ThemeButton } from "@/components/global/button/ThemeButton";
+import Icons from "@/components/global/icons/Icons";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Icons from "@/components/global/icons/Icons";
-import { ThemeButton } from "@/components/global/button/ThemeButton";
+
+import { sideBar } from "./list-menu";
 
 const Sidebar = () => {
   return (

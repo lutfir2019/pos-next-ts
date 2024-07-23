@@ -1,13 +1,14 @@
-import * as yup from "yup";
+import { Form, Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Form, Formik } from "formik";
+import React from "react";
+import * as yup from "yup";
+
 import Input from "@/components/global/input/inputCustom";
 import Password from "@/components/global/input/password";
-import React from "react";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/stores/auth/useAuth";
-import { SignInType } from "@/types/auth";
+import { SignInType } from "@/types/auth/login";
 
 interface Props {
   onToggleForm: any;

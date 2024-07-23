@@ -18,7 +18,11 @@ export type IconsType =
       Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
     >;
 
-export type Pagination = {
+export type MetaType = {
+  pagination: PaginationType;
+};
+
+export type PaginationType = {
   page: number;
   per_page: number;
   total: number;

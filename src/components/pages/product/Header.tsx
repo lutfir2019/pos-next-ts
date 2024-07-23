@@ -1,7 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import AddEdit from "./modal/AddEdit";
 import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+
+import AddEdit from "./modal/AddEdit";
 
 const Header = () => {
   const [open, setOpen] = useState<boolean>(false);

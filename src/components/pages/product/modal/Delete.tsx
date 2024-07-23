@@ -1,6 +1,7 @@
+import React, { Dispatch, SetStateAction } from "react";
+
 import Modal from "@/components/global/modal/modal";
 import { Button } from "@/components/ui/button";
-import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
   open: boolean;

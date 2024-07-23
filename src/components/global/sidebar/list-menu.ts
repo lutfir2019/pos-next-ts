@@ -1,5 +1,6 @@
-import { SideBar } from "@/types/sidebar";
 import { Home, Package, ShoppingCart } from "lucide-react";
+
+import { SideBar } from "@/types/sidebar";
 
 export const sideBar: SideBar[] = [
   {

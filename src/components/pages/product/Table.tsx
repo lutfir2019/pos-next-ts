@@ -1,4 +1,7 @@
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,13 +18,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formattedDate } from "@/composables/handleDate";
 import { useProduct } from "@/stores/product/useProduct";
-import { MoreHorizontal } from "lucide-react";
-import { useState } from "react";
+import { ProductType } from "@/types/products";
+
 import AddEdit from "./modal/AddEdit";
 import Delete from "./modal/Delete";
-import { formattedDate } from "@/composables/handleDate";
-import { ProductType } from "@/types/products";
 
 const TableProduct = () => {
   const productStore = useProduct();
@@ -29,7 +31,7 @@ const TableProduct = () => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
-  const [deleteData, setDeleteData] = useState<number | null>(null);
+  const [deleteData, setDeleteData] = useState<string | null>(null);
   const [row, setRow] = useState<ProductType | null>(null);
 
   const handleEdit = (data: ProductType) => {
@@ -37,13 +39,13 @@ const TableProduct = () => {
     setOpen(true);
   };
 
-  const toggleDelete = (id: number) => {
-    setDeleteData(id);
+  const toggleDelete = (code: string) => {
+    setDeleteData(code);
     setOpenDelete(true);
   };
 
   const handleDelete = () => {
-    console.log("test delete", deleteData);
+    productStore.delete(deleteData ?? "");
     setOpenDelete(false);
   };
 
@@ -103,7 +105,7 @@ const TableProduct = () => {
                         Edit
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onClick={() => toggleDelete(data?.id ?? 0)}
+                        onClick={() => toggleDelete(data?.product_code ?? "")}
                       >
                         Hapus
                       </DropdownMenuItem>

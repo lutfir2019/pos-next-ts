@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,9 +11,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+
 import { sideBar } from "../sidebar/list-menu";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 
 const CustomBreadcrump = () => {
   const pathName = usePathname();

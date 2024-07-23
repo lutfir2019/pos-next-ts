@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Pagination,
   PaginationContent,
@@ -12,17 +13,17 @@ import { cn } from "@/lib/utils";
 
 const CustomPagination: React.FC<{
   page: number;
-  total: number;
+  totalPages: number;
   maxView?: number;
   onPageChange: (page: number) => void;
   className?: string;
-}> = ({ page, total, onPageChange, maxView = 5, className }) => {
+}> = ({ page, onPageChange, maxView = 5, className, totalPages }) => {
   // Calculate the number of visible page links
-  const visiblePages = Math.min(maxView, total); // Show a maximum of 5 pages
+  const visiblePages = Math.min(maxView, totalPages); // Show a maximum of 5 pages
 
   // Calculate the starting and ending page numbers for the visible range
   const startIndex = Math.max(1, Math.floor(page - (visiblePages - 1) / 2));
-  const endIndex = Math.min(total, startIndex + visiblePages - 1);
+  const endIndex = Math.min(totalPages, startIndex + visiblePages - 1);
 
   const pageLinks = Array.from(
     { length: endIndex - startIndex + 1 },
@@ -45,7 +46,7 @@ const CustomPagination: React.FC<{
 
   return (
     <>
-      {page > 0 && (
+      {totalPages > 0 && (
         <Pagination className={className}>
           <PaginationContent>
             <PaginationItem className="cursor-pointer">
@@ -72,12 +73,12 @@ const CustomPagination: React.FC<{
 
             {pageLinks}
 
-            {endIndex < total - 2 && <PaginationEllipsis />}
+            {endIndex < totalPages - 2 && <PaginationEllipsis />}
 
-            {endIndex < total - 1 && (
+            {endIndex < totalPages - 1 && (
               <PaginationItem className="cursor-pointer">
-                <PaginationLink onClick={() => onPageChange(total)}>
-                  {total}
+                <PaginationLink onClick={() => onPageChange(totalPages)}>
+                  {totalPages}
                 </PaginationLink>
               </PaginationItem>
             )}
@@ -86,10 +87,10 @@ const CustomPagination: React.FC<{
               <PaginationNext
                 className={cn({
                   "text-secondary hover:bg-transparent hover:text-secondary":
-                    page == total,
+                    page == totalPages,
                 })}
                 onClick={() => {
-                  if (page < total) onPageChange(page + 1);
+                  if (page < totalPages) onPageChange(page + 1);
                 }}
               />
             </PaginationItem>

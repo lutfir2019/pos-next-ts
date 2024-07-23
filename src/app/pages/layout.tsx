@@ -1,10 +1,11 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import Header from "@/components/global/header/Header";
 import Sidebar from "@/components/global/sidebar/Sidebar";
 import { useAuth } from "@/stores/auth/useAuth";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 interface Children {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ const Layout = ({ children }: Readonly<Children>) => {
   const pathName = usePathname();
 
   useEffect(() => {
-    if (!authStore.getToken()) return router.replace("/auth");
+    if (!authStore.getToken()) router.replace("/auth");
   }, [pathName, authStore, router]);
 
   return (

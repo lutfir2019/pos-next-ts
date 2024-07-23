@@ -1,7 +1,9 @@
 "use client";
 
-import { useLoading } from "@/stores/useLoading";
 import { ImSpinner2 } from "react-icons/im";
+
+import { useLoading } from "@/stores/useLoading";
+
 import Modal from "./modal";
 
 const LoadingPage = () => {

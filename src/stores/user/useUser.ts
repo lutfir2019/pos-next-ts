@@ -1,6 +1,7 @@
+import { create } from "zustand";
+
 import { submitUser } from "@/api/users/request";
 import { Action, State } from "@/types/users";
-import { create } from "zustand";
 
 export const useUser = create<State & Action>((set) => ({
   data: {},

@@ -1,9 +1,10 @@
 "use client";
 
+import { NextPage } from "next";
 import { useState } from "react";
+
 import SignInForm from "@/components/auth/SignInForm";
 import SignUpForm from "@/components/auth/SignUpForm";
-import { NextPage } from "next";
 
 const Page: NextPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);

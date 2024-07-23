@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import React, { Dispatch, SetStateAction } from "react";
+
 import { cn } from "@/lib/utils";
 
 interface ModalType {

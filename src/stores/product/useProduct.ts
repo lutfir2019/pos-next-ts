@@ -1,43 +1,70 @@
 import { create } from "zustand";
-import { getProducts, submitProduct } from "@/api/products/request";
-import { Action, Product, State } from "@/types/products";
-import { Response } from "@/types/globalType";
 
-export const useProduct = create<State & Action>((set) => ({
+import {
+  createData,
+  deleteData,
+  getData,
+  updateData,
+} from "@/api/products/request";
+import { LoadingType } from "@/types/globalType";
+import { Action, State } from "@/types/products";
+
+export const useProduct = create<State & LoadingType & Action>((set, get) => ({
   data: [],
   is_soft_loading: false,
   is_loading: false,
   error: null,
   meta: {
     pagination: {
-      page: 0,
+      page: 1,
       per_page: 10,
       total: 0,
       total_pages: 0,
     },
   },
 
-  getProduct: async (params): Promise<Response<Product>> => {
+  get: async (params) => {
     set({ is_loading: true, is_soft_loading: !params?.is_no_soft_loading });
     try {
-      const res = await getProducts({
-        limit: params?.limit ?? 10,
-        skip: params?.skip,
+      const res: State = await getData({
+        page: params?.page ?? get().meta.pagination.page,
+        per_page: params?.per_page ?? get().meta.pagination.per_page,
       });
-      set({ data: res.data });
-      return res?.data;
+      set({ data: res?.data, meta: res?.meta });
+      return res;
     } finally {
       set({ is_loading: false, is_soft_loading: false });
     }
   },
 
-  submitProduct: async (params) => {
+  create: async (params) => {
     set({ is_loading: true, is_soft_loading: true });
     try {
-      const res = await submitProduct(params);
-      set({ data: res?.data });
-      console.log(res)
-      return res?.data;
+      const res: State = await createData(params);
+      set({ data: res?.data, meta: res?.meta });
+      return res;
+    } finally {
+      set({ is_loading: false, is_soft_loading: false });
+    }
+  },
+
+  update: async (params) => {
+    set({ is_loading: true, is_soft_loading: true });
+    try {
+      const res: State = await updateData(params);
+      set({ data: res?.data, meta: res?.meta });
+      return res;
+    } finally {
+      set({ is_loading: false, is_soft_loading: false });
+    }
+  },
+
+  delete: async (params) => {
+    set({ is_loading: true, is_soft_loading: true });
+    try {
+      const res: State = await deleteData(params);
+      set({ data: res?.data, meta: res?.meta });
+      return res;
     } finally {
       set({ is_loading: false, is_soft_loading: false });
     }

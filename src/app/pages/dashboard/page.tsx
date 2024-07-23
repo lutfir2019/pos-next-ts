@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+
 import Chart from "@/components/global/chart/CustomChart";
 import Header from "@/components/pages/dashboard/DashboardHeader";
 import RecentSales from "@/components/pages/dashboard/RecentSales";

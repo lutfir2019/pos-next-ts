@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { useLoading } from "@/stores/useLoading";
+
 import { handleAxiosError } from "@/composables/handleError";
 import { useAuth } from "@/stores/auth/useAuth";
+import { useLoading } from "@/stores/useLoading";
 
 const createAxiosInstance = () => {
   const axiosInstance = axios.create({

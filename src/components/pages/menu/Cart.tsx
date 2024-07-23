@@ -1,14 +1,15 @@
+import { Trash } from "lucide-react";
 import React from "react";
+
+import Input from "@/components/global/input/inputCustom";
+import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardHeader,
   CardContent,
-  CardTitle,
   CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
-import Input from "@/components/global/input/inputCustom";
 
 interface CartItem {
   id: number;
@@ -36,7 +37,7 @@ const Cart: React.FC<CartProps> = ({
   );
 
   return (
-    <Card className="w-full h-fit md:max-w-xs">
+    <Card className="w-full h-full md:max-w-xs">
       <CardHeader>
         <CardTitle>Order list</CardTitle>
         <CardDescription>#08098999917</CardDescription>
@@ -50,7 +51,7 @@ const Cart: React.FC<CartProps> = ({
               {items.map((item, index) => (
                 <li
                   key={item.id}
-                  className="flex justify-between items-end border-b pb-2"
+                  className="flex flex-col justify-between items-end border-b pb-2"
                 >
                   <div className="flex flex-col w-full">
                     <h4 className="text-base">{item.name}</h4>
@@ -85,19 +86,21 @@ const Cart: React.FC<CartProps> = ({
                         +
                       </Button>
                     </div>
+                  </div>
+                  <div className="flex align-middle mt-2">
                     <Input
                       name={`cartItems[${index}].note`}
                       placeholder="Input Note"
                     />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => onRemoveItem(index)}
+                      className="ml-4"
+                    >
+                      <Trash className="w-5 h-5" />
+                    </Button>
                   </div>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={() => onRemoveItem(index)}
-                    className="ml-4"
-                  >
-                    <Trash className="w-5 h-5" />
-                  </Button>
                 </li>
               ))}
             </ul>

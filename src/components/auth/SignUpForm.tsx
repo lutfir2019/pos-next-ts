@@ -1,13 +1,14 @@
-import * as yup from "yup";
+import { Form, Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Form, Formik } from "formik";
+import React from "react";
+import * as yup from "yup";
+
 import Input from "@/components/global/input/inputCustom";
 import Password from "@/components/global/input/password";
-import React from "react";
-import { SignUpType } from "@/types/users";
-import { useUser } from "@/stores/user/useUser";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/stores/auth/useAuth";
+import { RegisterType } from "@/types/auth/register";
 
 interface Props {
   onToggleForm: any;
@@ -26,23 +27,23 @@ const validationSchema = yup.object({
     .required("Bidang ini wajib di isi"),
 });
 
-const initialValues: SignUpType = {
+const initialValues: RegisterType = {
   email: "",
+  name: "",
   password: "",
   passwordConfirm: "",
-  name: "",
   role: "user",
 };
 
 const SignUpForm: React.FC<Props> = ({ onToggleForm }) => {
-  const userStore = useUser();
+  const authStore = useAuth();
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) =>
-        await userStore.submitUser(values).then(() => {
+        await authStore.register(values).then(() => {
           onToggleForm();
           resetForm();
         })

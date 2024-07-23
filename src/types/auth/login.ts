@@ -1,4 +1,5 @@
 import { LoadingType } from "../globalType";
+import { RegisterType } from "./register";
 
 export type Auth = {
   data: Data;
@@ -28,6 +29,7 @@ export interface State extends LoadingType {
 
 export type Action = {
   login: (payload: SignInType) => Promise<Auth>;
+  register: (payload: RegisterType) => Promise<{message: string, data: null}>;
   signOut: () => void;
   getToken: () => string;
 };

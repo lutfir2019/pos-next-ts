@@ -1,5 +1,9 @@
 "use client";
 
+import { Package2, PanelLeft, Search } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,15 +21,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
-import { Package2, PanelLeft, Search } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { sideBar } from "../sidebar/list-menu";
-import Icons from "../icons/Icons";
-import { ThemeButton } from "../button/ThemeButton";
-import CustomBreadcrump from "./CustomBreadcrumb";
 import { useAuth } from "@/stores/auth/useAuth";
+
+import { ThemeButton } from "../button/ThemeButton";
+import Icons from "../icons/Icons";
+import { sideBar } from "../sidebar/list-menu";
+import CustomBreadcrump from "./CustomBreadcrumb";
 
 const Header = () => {
   const authStore = useAuth();

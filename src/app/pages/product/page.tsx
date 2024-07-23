@@ -1,6 +1,12 @@
 "use client";
 
 import { NextPage } from "next";
+import { useEffect } from "react";
+
+import NoData from "@/components/global/table/NoData";
+import Footer from "@/components/pages/product/Footer";
+import Header from "@/components/pages/product/Header";
+import TableProduct from "@/components/pages/product/Table";
 import {
   Card,
   CardContent,
@@ -10,17 +16,12 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useProduct } from "@/stores/product/useProduct";
-import { useEffect } from "react";
-import Header from "@/components/pages/product/Header";
-import TableProduct from "@/components/pages/product/Table";
-import Footer from "@/components/pages/product/Footer";
-import NoData from "@/components/global/table/NoData";
 
 const Page: NextPage = () => {
   const productStore = useProduct();
 
   useEffect(() => {
-    useProduct.getState().getProduct({ limit: 10, skip: 1 });
+    productStore.get({ per_page: 10, page: 1 });
   }, []);
 
   return (
@@ -38,8 +39,9 @@ const Page: NextPage = () => {
             {productStore.data?.length > 0 ? <TableProduct /> : <NoData />}
           </CardContent>
           <Footer
+            totalPages={productStore.meta.pagination.total_pages}
             page={productStore.meta.pagination.page}
-            total={productStore.meta.pagination.total_pages}
+            total={productStore.meta.pagination.total}
             perPage={productStore.meta.pagination.per_page}
           />
         </Card>

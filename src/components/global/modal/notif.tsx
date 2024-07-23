@@ -1,15 +1,17 @@
 "use client";
 
-import { useLayout } from "@/stores/useLayout";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Modal from "./modal";
 import {
+  AiOutlineCheckCircle,
   AiOutlineCloseCircle,
   AiOutlineInfoCircle,
-  AiOutlineCheckCircle,
   AiOutlineWarning,
 } from "react-icons/ai";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useLayout } from "@/stores/useLayout";
+
+import Modal from "./modal";
 
 const getIconAndColors = (type: string) => {
   switch (type) {
@@ -44,7 +46,7 @@ const getIconAndColors = (type: string) => {
 const NotificationPage = () => {
   const layoutStore = useLayout();
   const isOpen = layoutStore.show ?? false;
-  const { icon, color, hover } = getIconAndColors(layoutStore.type || "error");
+  const { icon, color, hover } = getIconAndColors(layoutStore.type ?? "error");
 
   return (
     <Modal
@@ -54,14 +56,14 @@ const NotificationPage = () => {
     >
       <div
         className={cn(
-          "p-6 rounded-2xl shadow-lg max-w-md mx-auto border bg-white",
+          "p-6 rounded-2xl shadow-lg max-w-md mx-auto border bg-gray-100",
           color
         )}
       >
         <div className="flex flex-col items-center">
           {icon}
           <h2 className="text-2xl font-semibold mt-4">{layoutStore.title}</h2>
-          <p className="text-center mt-2 mb-4">{layoutStore.message}</p>
+          <p className="text-secondary font-medium text-center mt-2 mb-4">{layoutStore.message}</p>
           <Button
             type="button"
             onClick={() => layoutStore.setLayout({ show: false })}
