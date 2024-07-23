@@ -3,6 +3,7 @@
 import { FieldArray, Form, Formik } from "formik";
 import { NextPage } from "next";
 
+import Pagination from "@/components/global/pagination/CustomPagination";
 import Cart from "@/components/pages/menu/Cart";
 import ProductCard from "@/components/pages/menu/ProductCard";
 import { useProduct } from "@/stores/product/useProduct";
@@ -77,14 +78,26 @@ const Page: NextPage = () => {
                     POS Application
                   </h1>
                   <div className="flex gap-3 flex-col md:flex-row">
-                    <div className="h-svh overflow-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full content-start">
-                      {products?.map((product) => (
-                        <ProductCard
-                          key={product.id}
-                          product={product}
-                          onAddToCart={handleAddToCart}
-                        />
-                      ))}
+                    <div className="flex flex-col w-full gap-3">
+                      <Pagination
+                        page={productStore.meta.pagination.page}
+                        totalPages={productStore.meta.pagination.total_pages}
+                        onPageChange={async (val) =>
+                          await productStore.get({
+                            per_page: 20,
+                            page: val,
+                          })
+                        }
+                      />
+                      <div className="md:max-h-svh p-1 overflow-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full content-start">
+                        {products?.map((product) => (
+                          <ProductCard
+                            key={product.id}
+                            product={product}
+                            onAddToCart={handleAddToCart}
+                          />
+                        ))}
+                      </div>
                     </div>
                     <Cart
                       items={values.cartItems}
