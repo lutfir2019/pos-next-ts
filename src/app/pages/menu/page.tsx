@@ -78,8 +78,9 @@ const Page: NextPage = () => {
                     POS Application
                   </h1>
                   <div className="flex gap-3 flex-col md:flex-row">
-                    <div className="flex flex-col w-full gap-3">
+                    <div className="flex flex-col w-full gap-2">
                       <Pagination
+                        className="hidden md:flex bg-card p-1 rounded-md"
                         page={productStore.meta.pagination.page}
                         totalPages={productStore.meta.pagination.total_pages}
                         onPageChange={async (val) =>
@@ -99,6 +100,17 @@ const Page: NextPage = () => {
                         ))}
                       </div>
                     </div>
+                    <Pagination
+                      className="flex md:hidden"
+                      page={productStore.meta.pagination.page}
+                      totalPages={productStore.meta.pagination.total_pages}
+                      onPageChange={async (val) =>
+                        await productStore.get({
+                          per_page: 20,
+                          page: val,
+                        })
+                      }
+                    />
                     <Cart
                       items={values.cartItems}
                       onUpdateQuantity={replace}
