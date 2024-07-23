@@ -1,15 +1,3 @@
 {
-  "extends": "next/core-web-vitals",
-  "plugins": ["import", "simple-import-sort"],
-  "rules": {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "import/order": [
-      "error",
-      {
-        "groups": [["builtin", "external"], "internal", "parent", "sibling", "index"],
-        "newlines-between": "always"
-      }
-    ]
-  }
+  "extends": "next/core-web-vitals"
 }

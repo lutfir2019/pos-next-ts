@@ -1,4 +1,5 @@
 import { LoadingType } from "../globalType";
+
 import { RegisterType } from "./register";
 
 export type Auth = {
