@@ -1,56 +1,65 @@
-
 "use client";
 
 import { FieldArray, Form, Formik } from "formik";
 import { NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Pagination from "@/components/global/pagination/CustomPagination";
 import Cart from "@/components/pages/menu/Cart";
 import ProductCard from "@/components/pages/menu/ProductCard";
 import { useProduct } from "@/stores/product/useProduct";
+import { CartItem } from "@/types/products/cart";
 
-interface CartItem {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  note?: string;
-  imageUrl?: string;
-}
+const initialValues = { cartItems: [] as CartItem[] };
+
+const findItemById = (cartItems: CartItem[], id: number) => {
+  return cartItems?.find(({ id: itemId }) => itemId === id);
+};
+
+const findIdxItem = (cartItems: CartItem[], item: CartItem) => {
+  return cartItems?.indexOf(item);
+};
+
+const mapItemByIdx = (cartItems: CartItem[], item: CartItem) => {
+  const new_data = cartItems?.find((data) => data.id === item.id);
+
+  if (new_data?.quantity == new_data?.stok) return new_data;
+
+  return {
+    ...new_data,
+    quantity: new_data?.quantity ? new_data?.quantity + 1 : 1,
+  };
+};
 
 const Page: NextPage = () => {
   const productStore = useProduct();
+  const [products, setProducts] = useState<CartItem[]>(
+    productStore.data?.map((item) => ({
+      id: item.id,
+      name: item.name,
+      price: item.price_selling,
+      note: "",
+      imageUrl: item.file,
+      stok: item.quantity,
+    })) as CartItem[]
+  );
 
   useEffect(() => {
     productStore.get({ page: 1, per_page: 20 });
   }, []);
 
-  const products = productStore.data?.map((item) => ({
-    id: item.id,
-    name: item.name,
-    price: item.price_selling,
-    note: "",
-    imageUrl: item.file,
-  })) as CartItem[];
-
-  const initialValues = { cartItems: [] as CartItem[] };
-
-  const findItemById = (cartItems: CartItem[], id: number) => {
-    return cartItems?.find(({ id: itemId }) => itemId === id);
-  };
-
-  const findIdxItem = (cartItems: CartItem[], item: CartItem) => {
-    return cartItems?.indexOf(item);
-  };
-
-  const mapItemByIdx = (cartItems: CartItem[], item: CartItem) => {
-    const new_data = cartItems?.find((data) => data.id === item.id);
-    return {
-      ...new_data,
-      quantity: new_data?.quantity ? new_data?.quantity + 1 : 1,
-    };
-  };
+  useEffect(() => {
+    setProducts(
+      productStore.data?.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price_selling,
+        note: "",
+        imageUrl: item.file,
+        stok: item.quantity,
+      })) as CartItem[]
+    );
+  }, [productStore]);
 
   return (
     <Formik

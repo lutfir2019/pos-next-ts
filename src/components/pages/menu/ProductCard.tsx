@@ -9,19 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  note?: string;
-  imageUrl?: string;
-}
+import { CartItem } from "@/types/products/cart";
 
 interface ProductCardProps {
-  product: Product;
-  onAddToCart: (product: Product) => void;
+  product: CartItem;
+  onAddToCart: (CartItem: CartItem) => void;
 }
 
 const sortText = (text: string) => {
@@ -46,8 +38,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
         <CardTitle className="text-base font-semibold">
           {sortText(product.name)}
         </CardTitle>
-        <CardDescription className="text-muted-foreground">
+        <CardDescription className="flex flex-col text-muted-foreground gap-1">
           Rp {product.price.toLocaleString()}
+          <span className="text-xs">Stok: {product.stok} pcs</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0 px-3 pb-1">

@@ -10,15 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-interface CartItem {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  note?: string;
-  imageUrl?: string;
-}
+import { CartItem } from "@/types/products/cart";
 
 interface CartProps {
   items: CartItem[];
@@ -76,6 +68,7 @@ const Cart: React.FC<CartProps> = ({
                       <Button
                         type="button"
                         className="w-5 h-auto"
+                        disabled={item.quantity == item.stok}
                         onClick={() =>
                           onUpdateQuantity(index, {
                             ...item,
