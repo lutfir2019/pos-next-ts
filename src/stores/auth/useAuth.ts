@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { create } from "zustand";
 
 import { submitLogin, submitRegister } from "@/api/auth/request";
+import { navigate } from "@/composables/navigate";
 import { Action, State } from "@/types/auth/login";
 
 export const useAuth = create<State & Action>((set, get) => ({
@@ -15,7 +16,7 @@ export const useAuth = create<State & Action>((set, get) => ({
       const token = res?.data?.token;
       Cookies.set("token", token);
       set({ data: res?.data });
-      window.location.href = "/pages";
+      navigate("/pages");
       return res?.data;
     } finally {
       set({ is_loading: false, is_soft_loading: false });
@@ -26,7 +27,7 @@ export const useAuth = create<State & Action>((set, get) => ({
     set({ is_loading: true, is_soft_loading: true });
     try {
       const res = await submitRegister(state);
-      return res?.data
+      return res?.data;
     } finally {
       set({ is_loading: false, is_soft_loading: false });
     }
@@ -35,7 +36,7 @@ export const useAuth = create<State & Action>((set, get) => ({
   signOut: () => {
     set({ data: null });
     Cookies.remove("token");
-    window.location.href = "/auth/";
+    navigate("/auth");
   },
 
   getToken: () => {
