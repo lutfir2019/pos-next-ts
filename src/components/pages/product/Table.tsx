@@ -61,6 +61,7 @@ const TableProduct = () => {
             <TableHead className="hidden md:table-cell">Kode</TableHead>
             <TableHead className="hidden md:table-cell">Stok</TableHead>
             <TableHead>Harga</TableHead>
+            <TableHead className="hidden md:table-cell">Created by</TableHead>
             <TableHead className="hidden md:table-cell">Created at</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
@@ -88,6 +89,9 @@ const TableProduct = () => {
                   {data.quantity}
                 </TableCell>
                 <TableCell>RP.{data.price_selling?.toLocaleString()}</TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {data.created_by}
+                </TableCell>
                 <TableCell className="hidden md:table-cell">
                   {formattedDate(data.created_at)}
                 </TableCell>

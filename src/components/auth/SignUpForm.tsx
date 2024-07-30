@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Input from "@/components/global/input/inputCustom";
 import Password from "@/components/global/input/password";
 import { Button } from "@/components/ui/button";
+import { usernameRegex } from "@/constants/auth/regexCarakterKhusus";
 import { useAuth } from "@/stores/auth/useAuth";
 import { RegisterType } from "@/types/auth/register";
 
@@ -15,10 +16,13 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  email: yup
+  username: yup
     .string()
-    .email("Email tidak valid")
-    .required("Bidang ini wajib di isi"),
+    .required("Bidang ini wajib di isi")
+    .matches(
+      usernameRegex,
+      "Username tidak boleh mengandung spasi atau karakter khusus lainnya"
+    ),
   name: yup.string().required("Bidang ini wajib di isi"),
   password: yup.string().required("Bidang ini wajib di isi"),
   passwordConfirm: yup
@@ -28,7 +32,7 @@ const validationSchema = yup.object({
 });
 
 const initialValues: RegisterType = {
-  email: "",
+  username: "",
   name: "",
   password: "",
   passwordConfirm: "",
@@ -77,10 +81,9 @@ const SignUpForm: React.FC<Props> = ({ onToggleForm }) => {
                     primary
                   />
                   <Input
-                    name="email"
-                    type="email"
-                    label="Email"
-                    placeholder="jhondoe@example.com"
+                    name="username"
+                    label="Username"
+                    placeholder="jhondoe"
                     primary
                   />
                   <Password name="password" label="Password" primary />

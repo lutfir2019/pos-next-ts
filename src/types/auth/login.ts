@@ -14,13 +14,13 @@ export type Data = {
   CreatedAt: Date;
   UpdatedAt: Date;
   DeletedAt: null;
-  email: string;
+  username: string;
   name: string;
   role: string;
 };
 
 export type SignInType = {
-  email: string;
+  username: string;
   password: string;
 };
 

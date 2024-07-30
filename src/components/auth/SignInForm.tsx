@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Input from "@/components/global/input/inputCustom";
 import Password from "@/components/global/input/password";
 import { Button } from "@/components/ui/button";
+import { usernameRegex } from "@/constants/auth/regexCarakterKhusus";
 import { useAuth } from "@/stores/auth/useAuth";
 import { SignInType } from "@/types/auth/login";
 
@@ -15,15 +16,18 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  email: yup
+  username: yup
     .string()
-    .email("Email tidak valid")
-    .required("Bidang ini wajib di isi"),
+    .required("Bidang ini wajib di isi")
+    .matches(
+      usernameRegex,
+      "Username tidak boleh mengandung spasi atau karakter khusus lainnya"
+    ),
   password: yup.string().required("Bidang ini wajib di isi"),
 });
 
 const initialValues: SignInType = {
-  email: "",
+  username: "",
   password: "",
 };
 
@@ -43,16 +47,15 @@ const SignInForm: React.FC<Props> = ({ onToggleForm }) => {
               <div className="text-center">
                 <h1 className="text-3xl font-bold">Sign In</h1>
                 <p className="mt-2 text-base text-muted-foreground">
-                  Enter your email below to sign-in to your account
+                  Enter your username below to sign-in to your account
                 </p>
               </div>
               <div className="mt-8 space-y-6">
                 <div className="space-y-2">
                   <Input
-                    name="email"
-                    type="email"
-                    label="Email"
-                    placeholder="jhondoe@example.com"
+                    name="username"
+                    label="Username"
+                    placeholder="jhondoe"
                     primary
                   />
                   <Password name="password" label="Password" primary />

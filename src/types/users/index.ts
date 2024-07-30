@@ -1,7 +1,7 @@
 import { DefaultType, LoadingType } from "../globalType";
 
 export type SignUpType = {
-  email: string;
+  username: string;
   password: string;
   passwordConfirm: string;
   name: string;

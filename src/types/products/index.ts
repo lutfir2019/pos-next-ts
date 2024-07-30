@@ -26,6 +26,7 @@ export type ProductType = {
   price_purchase: number;
   price_selling: number;
   file: string | null;
+  created_by?: string;
   created_at?: string;
   updated_at?: string;
 };
