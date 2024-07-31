@@ -31,10 +31,10 @@ const Password: React.FC<Props> = ({
   };
 
   return (
-    <div className={cn("grid w-full items-center", className)}>
-      <div className="flex gap-1">
+    <div className={cn("grid w-full gap-2 items-center", className)}>
+      <div className="relative w-fit pr-3 pt-2 flex">
         {label && <Label htmlFor={name}>{label}</Label>}
-        {primary && <span className="text-red-500 -translate-y-[7px]">*</span>}
+        {primary && <span className="absolute text-red-500 top-0 right-0">*</span>}
       </div>
       <div className="relative pb-[1.2rem]">
         <Input

@@ -95,10 +95,11 @@ const Header = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>{authStore.getUser()}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
+          <Link href="/pages/user">
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => authStore.signOut()}>
             Logout

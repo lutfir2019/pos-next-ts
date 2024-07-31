@@ -10,7 +10,7 @@ export type Auth = {
 };
 
 export type Data = {
-  ID: number;
+  id: number;
   CreatedAt: Date;
   UpdatedAt: Date;
   DeletedAt: null;
@@ -30,7 +30,9 @@ export interface State extends LoadingType {
 
 export type Action = {
   login: (payload: SignInType) => Promise<Auth>;
-  register: (payload: RegisterType) => Promise<{message: string, data: null}>;
+  register: (payload: RegisterType) => Promise<{ message: string; data: null }>;
   signOut: () => void;
   getToken: () => string;
+  getUser: () => string;
+  setUser: (data: Data) => void;
 };

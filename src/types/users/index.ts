@@ -1,5 +1,3 @@
-import { DefaultType, LoadingType } from "../globalType";
-
 export type SignUpType = {
   username: string;
   password: string;
@@ -8,10 +6,30 @@ export type SignUpType = {
   role: string;
 };
 
-export interface State extends LoadingType {
-  data: SignUpType | DefaultType;
-}
+export type Data = {
+  id: number;
+  username: string;
+  name: string;
+  role: string;
+};
+
+export type State = {
+  data: Data | null;
+  is_loading?: boolean;
+};
 
 export type Action = {
-  submitUser: (params: SignUpType) => Promise<SignUpType>;
+  submitUser: (payload: SignUpType) => Promise<Data>;
+  updateUser: (payload: UserSetting) => Promise<State>;
+  getSelf: () => Promise<Data>;
+};
+
+export type UserSetting = {
+  id?: number;
+  role?: string;
+  name: string;
+  username: string;
+  currentPassword: string;
+  password: string;
+  passwordConfirm: string;
 };
