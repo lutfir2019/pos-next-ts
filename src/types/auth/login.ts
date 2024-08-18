@@ -33,6 +33,6 @@ export type Action = {
   register: (payload: RegisterType) => Promise<{ message: string; data: null }>;
   signOut: () => void;
   getToken: () => string;
-  getUser: () => string;
+  getUser: () => Data;
   setUser: (data: Data) => void;
 };

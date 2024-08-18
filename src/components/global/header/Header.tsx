@@ -30,7 +30,8 @@ import { sideBar } from "../sidebar/list-menu";
 import CustomBreadcrump from "./CustomBreadcrumb";
 
 const Header = () => {
-  const authStore = useAuth();
+  const { getUser, signOut } = useAuth();
+  const name = getUser()?.name;
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -95,15 +96,13 @@ const Header = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{authStore.getUser()}</DropdownMenuLabel>
+          <DropdownMenuLabel>{name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Link href="/pages/user">
             <DropdownMenuItem>Settings</DropdownMenuItem>
           </Link>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => authStore.signOut()}>
-            Logout
-          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

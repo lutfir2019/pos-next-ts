@@ -15,7 +15,7 @@ export const useAuth = create<State & Action>((set, get) => ({
       const token = res?.data?.token;
 
       Cookies.set("token", token);
-      Cookies.set("user", res?.data?.data?.name);
+      Cookies.set("user", JSON.stringify(res?.data?.data));
 
       set({ data: res?.data });
       navigate("/pages");
@@ -50,15 +50,28 @@ export const useAuth = create<State & Action>((set, get) => ({
 
   getUser: () => {
     const { data } = get();
-    const user = data?.data?.name ?? Cookies.get("user");
-    return user ?? "";
+    let user: any = data?.data;
+    const cookie = Cookies.get("user");
+
+    if (
+      !user &&
+      typeof cookie === "string" &&
+      cookie.startsWith("{") &&
+      cookie.endsWith("}")
+    )
+      user = JSON.parse(cookie ?? "");
+
+    return user;
   },
 
   setUser: (newdata) => {
     const { data } = get();
+    const { token, message, status } = data as Auth;
     set({
       data: {
-        ...(data as Auth),
+        token,
+        message,
+        status,
         data: newdata,
       },
     });

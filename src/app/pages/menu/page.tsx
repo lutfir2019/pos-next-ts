@@ -7,10 +7,13 @@ import { useEffect, useState } from "react";
 import Pagination from "@/components/global/pagination/CustomPagination";
 import Cart from "@/components/pages/menu/Cart";
 import ProductCard from "@/components/pages/menu/ProductCard";
+import { useMenu } from "@/stores/menu/menu";
 import { useProduct } from "@/stores/product/useProduct";
+import { useLayout } from "@/stores/useLayout";
+import { OrderType } from "@/types/menu";
 import { CartItem } from "@/types/products/cart";
 
-const initialValues = { cartItems: [] as CartItem[] };
+const initialValues = { cartItems: [] as CartItem[], total: 0 };
 
 const findItemById = (cartItems: CartItem[], id: number) => {
   return cartItems?.find(({ id: itemId }) => itemId === id);
@@ -33,6 +36,9 @@ const mapItemByIdx = (cartItems: CartItem[], item: CartItem) => {
 
 const Page: NextPage = () => {
   const productStore = useProduct();
+  const { create } = useMenu();
+  const { setLayout } = useLayout();
+
   const [products, setProducts] = useState<CartItem[]>(
     productStore.data?.map((item) => ({
       id: item.id,
@@ -64,7 +70,36 @@ const Page: NextPage = () => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={async (values, { resetForm }) => {
+        const { cartItems, total } = values;
+        const payload: OrderType = {
+          total: Number(total),
+          items: cartItems?.map(({ id, ...rest }) => ({
+            product_id: id,
+            ...rest,
+          })) as any,
+        };
+
+        await create(payload)
+          .then(async () => {
+            await productStore.get({ page: 1, per_page: 20 });
+            resetForm();
+            setLayout({
+              show: true,
+              title: "Success",
+              message: "Orderan berhasil ditambahkan",
+              type: "success",
+            });
+          })
+          .catch(() => {
+            setLayout({
+              show: true,
+              title: "Error",
+              message: "Orderan gagal",
+              type: "error",
+            });
+          });
+      }}
     >
       {({ values }) => (
         <Form className="w-full">

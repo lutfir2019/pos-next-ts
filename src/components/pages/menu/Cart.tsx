@@ -1,5 +1,7 @@
+"use client";
+
 import { Trash } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 import Input from "@/components/global/input/inputCustom";
 import { Button } from "@/components/ui/button";
@@ -11,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CartItem } from "@/types/products/cart";
+import { useFormikContext } from "formik";
 
 interface CartProps {
   items: CartItem[];
@@ -23,10 +26,15 @@ const Cart: React.FC<CartProps> = ({
   onRemoveItem,
   onUpdateQuantity,
 }) => {
+  const { setFieldValue } = useFormikContext();
   const totalPrice = items.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  useEffect(() => {
+    setFieldValue("total", totalPrice);
+  }, [totalPrice]);
 
   return (
     <Card className="w-full h-full md:max-w-xs">
@@ -80,19 +88,21 @@ const Cart: React.FC<CartProps> = ({
                       </Button>
                     </div>
                   </div>
-                  <div className="flex align-middle mt-2">
+                  <div className="flex w-full mt-2 justify-between items-center">
                     <Input
                       name={`cartItems[${index}].note`}
                       placeholder="Input Note"
                     />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      onClick={() => onRemoveItem(index)}
-                      className="ml-4"
-                    >
-                      <Trash className="w-5 h-5" />
-                    </Button>
+                    <div className="flex pb-1.5">
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={() => onRemoveItem(index)}
+                        className="ml-4"
+                      >
+                        <Trash className="w-5 h-5" />
+                      </Button>
+                    </div>
                   </div>
                 </li>
               ))}
