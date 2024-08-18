@@ -32,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
         alt={product.name}
         width={500}
         height={500}
-        className="w-full h-auto object-cover rounded-t-lg"
+        className="w-full h-28 object-cover rounded-t-lg"
       />
       <CardHeader className="p-2">
         <CardTitle className="text-base font-semibold">
